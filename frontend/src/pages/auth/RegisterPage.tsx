@@ -24,15 +24,15 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="w-full max-w-2xl">
+    <div className="w-full max-w-2xl mx-auto p-4 md:p-0">
       <Card
-        className="shadow-2xl"
+        className="shadow-2xl p-4 md:p-6 lg:p-8"
         style={{ borderRadius: 16 }}
       >
-        <div className="text-center mb-8">
-          <div className="text-4xl mb-2">📄</div>
-          <h1 className="text-3xl font-bold mb-2">Create Account</h1>
-          <p className="text-gray-500">Join Invoice OCR Platform</p>
+        <div className="text-center mb-6 md:mb-8">
+          <div className="text-3xl md:text-4xl mb-2">📄</div>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Create Account</h1>
+          <p className="text-gray-500 text-sm md:text-base">Join Invoice OCR Platform</p>
         </div>
 
         <Form
@@ -171,9 +171,9 @@ export default function RegisterPage() {
           </Form.Item>
         </Form>
 
-        <div className="text-center mt-6">
-          <span className="text-gray-500">Already have an account? </span>
-          <Link to="/login" className="text-blue-500 font-medium">
+        <div className="text-center mt-4 md:mt-6">
+          <span className="text-gray-500 text-sm md:text-base">Already have an account? </span>
+          <Link to="/login" className="text-blue-500 font-medium text-sm md:text-base">
             Sign in
           </Link>
         </div>

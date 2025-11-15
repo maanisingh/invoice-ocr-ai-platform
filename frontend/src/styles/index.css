@@ -38,6 +38,49 @@ html, body {
   .ant-card {
     margin-bottom: 12px;
   }
+
+  /* Header responsiveness */
+  .enterprise-header {
+    padding: 0 16px !important;
+  }
+
+  .enterprise-header .ant-space {
+    gap: 8px !important;
+  }
+
+  /* Content responsiveness */
+  .ant-layout-content {
+    padding: 16px !important;
+  }
+
+  /* Button responsiveness */
+  .ant-btn {
+    font-size: 14px !important;
+    height: 36px !important;
+    padding: 0 16px !important;
+  }
+
+  /* Form responsiveness */
+  .ant-form-item {
+    margin-bottom: 16px !important;
+  }
+
+  .ant-input,
+  .ant-input-password,
+  .ant-select-selector {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+  }
+
+  /* Modal responsiveness */
+  .ant-modal {
+    width: 95% !important;
+    max-width: none !important;
+    margin: 16px auto !important;
+  }
+
+  .ant-modal-content {
+    border-radius: 12px !important;
+  }
 }
 
 @media (max-width: 576px) {
@@ -57,6 +100,19 @@ html, body {
 
   .ant-tabs-nav {
     margin-bottom: 16px !important;
+  }
+
+  /* Extra small screens */
+  .enterprise-page-title {
+    font-size: 20px !important;
+  }
+
+  .stat-card-value {
+    font-size: 24px !important;
+  }
+
+  .ant-card-body {
+    padding: 16px !important;
   }
 }
 
@@ -240,9 +296,7 @@ html, body {
 /* Responsive utilities */
 @media (max-width: 768px) {
   .ant-layout-sider {
-    position: fixed !important;
-    z-index: 999;
-    height: 100vh;
+    display: none !important; /* Hide desktop sidebar on mobile */
   }
 
   .ant-layout-content {
@@ -275,6 +329,39 @@ html, body {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Mobile responsiveness for auth layout */
+@media (max-width: 640px) {
+  .auth-container {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .auth-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 0.5rem;
+  }
+
+  .auth-card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
 }
 
 /* Professional shadows */
@@ -463,6 +550,45 @@ html, body {
   backdrop-filter: blur(10px);
   max-height: 140px;
   overflow: hidden;
+}
+
+/* Mobile responsive adjustments for user card */
+@media (max-width: 768px) {
+  .sidebar-user-card {
+    padding: 8px;
+    max-height: 120px;
+  }
+
+  .user-card-content {
+    gap: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .user-avatar {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .user-name {
+    font-size: 12px !important;
+  }
+
+  .user-role {
+    font-size: 10px !important;
+  }
+
+  .user-card-stats {
+    margin-top: 8px !important;
+  }
+
+  .stat-item {
+    margin-bottom: 4px !important;
+  }
+
+  .stat-label,
+  .stat-value {
+    font-size: 10px !important;
+  }
 }
 
 .user-card-content {
@@ -684,7 +810,7 @@ table.enterprise-table thead th {
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
   border-bottom: 2px solid #e2e8f0 !important;
-  padding: 16px !important;
+  padding: 12px 16px !important;
 }
 
 .enterprise-table.ant-table .ant-table-tbody > tr,
@@ -700,10 +826,49 @@ table.enterprise-table thead th {
 
 .enterprise-table.ant-table .ant-table-tbody > tr > td,
 .ant-table.enterprise-table .ant-table-tbody > tr > td {
-  padding: 16px !important;
+  padding: 12px 16px !important;
   border-bottom: 1px solid #f1f5f9 !important;
   font-size: 14px;
   color: #334155;
+}
+
+/* Mobile responsive table adjustments */
+@media (max-width: 768px) {
+  .enterprise-table.ant-table .ant-table-thead > tr > th,
+  .ant-table.enterprise-table .ant-table-thead > tr > th {
+    font-size: 11px !important;
+    padding: 8px 12px !important;
+  }
+
+  .enterprise-table.ant-table .ant-table-tbody > tr > td,
+  .ant-table.enterprise-table .ant-table-tbody > tr > td {
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+  }
+
+  .enterprise-table .ant-table-tbody > tr > td .ant-space {
+    flex-wrap: wrap;
+    gap: 4px !important;
+  }
+
+  .enterprise-table .ant-tag {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+}
+
+@media (max-width: 576px) {
+  .enterprise-table.ant-table .ant-table-thead > tr > th,
+  .ant-table.enterprise-table .ant-table-thead > tr > th {
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+  }
+
+  .enterprise-table.ant-table .ant-table-tbody > tr > td,
+  .ant-table.enterprise-table .ant-table-tbody > tr > td {
+    font-size: 12px !important;
+    padding: 6px 8px !important;
+  }
 }
 
 /* Enterprise Buttons */

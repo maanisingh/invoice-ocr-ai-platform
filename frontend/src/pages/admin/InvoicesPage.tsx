@@ -259,36 +259,36 @@ export default function InvoicesPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
-        <div style={{ minWidth: '200px' }}>
-          <h1 className="text-3xl font-bold">Invoices</h1>
-          <p className="text-gray-500 mt-1">Manage all invoices</p>
+    <div className="space-y-6 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold">Invoices</h1>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">Manage all invoices</p>
         </div>
-        <Space wrap style={{ flexShrink: 0 }}>
-          <Button icon={<FileExcelOutlined />} onClick={handleExport}>
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <Button icon={<FileExcelOutlined />} onClick={handleExport} className="w-full sm:w-auto">
             Export
           </Button>
-          <Button type="primary" icon={<CameraOutlined />} onClick={() => navigate('/admin/invoices/camera')}>
+          <Button type="primary" icon={<CameraOutlined />} onClick={() => navigate('/admin/invoices/camera')} className="w-full sm:w-auto">
             Upload Invoice
           </Button>
-        </Space>
+        </div>
       </div>
 
       <Card>
-        <Space direction="vertical" className="w-full" size="middle">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             <Input
               placeholder="Search by invoice # or vendor..."
               prefix={<SearchOutlined />}
-              style={{ minWidth: 250, maxWidth: 300, flex: '1 1 250px' }}
+              className="w-full"
               value={filters.search}
               onChange={(e) => setFilters({ ...filters, search: e.target.value })}
               allowClear
             />
             <Select
               placeholder="Filter by Status"
-              style={{ minWidth: 150, width: 200 }}
+              className="w-full"
               value={filters.status}
               onChange={(value) => setFilters({ ...filters, status: value })}
               allowClear
@@ -300,7 +300,7 @@ export default function InvoicesPage() {
             </Select>
             <Select
               placeholder="Filter by Client"
-              style={{ minWidth: 150, width: 200 }}
+              className="w-full"
               value={filters.clientId}
               onChange={(value) => setFilters({ ...filters, clientId: value })}
               allowClear
@@ -315,7 +315,7 @@ export default function InvoicesPage() {
             </Select>
             <Select
               placeholder="Filter by Category"
-              style={{ minWidth: 150, width: 200 }}
+              className="w-full"
               value={filters.categoryId}
               onChange={(value) => setFilters({ ...filters, categoryId: value })}
               allowClear
@@ -328,17 +328,18 @@ export default function InvoicesPage() {
                 </Option>
               ))}
             </Select>
-            <RangePicker style={{ minWidth: 200 }} />
+            <RangePicker className="w-full" />
           </div>
 
           {selectedRowKeys.length > 0 && (
-            <div className="flex items-center gap-4 p-3 bg-blue-50 rounded">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3 bg-blue-50 rounded">
               <span className="font-medium">{selectedRowKeys.length} selected</span>
-              <Space>
+              <div className="flex flex-wrap gap-2">
                 <Button
                   size="small"
                   icon={<CheckOutlined />}
                   onClick={() => handleBulkAction('Approved')}
+                  className="w-full sm:w-auto"
                 >
                   Approve
                 </Button>
@@ -346,6 +347,7 @@ export default function InvoicesPage() {
                   size="small"
                   icon={<CloseOutlined />}
                   onClick={() => handleBulkAction('Rejected')}
+                  className="w-full sm:w-auto"
                 >
                   Reject
                 </Button>
@@ -354,34 +356,38 @@ export default function InvoicesPage() {
                   danger
                   icon={<DeleteOutlined />}
                   onClick={() => handleBulkAction('Deleted')}
+                  className="w-full sm:w-auto"
                 >
                   Delete
                 </Button>
-              </Space>
+              </div>
             </div>
           )}
 
-          <Table
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={filteredInvoices}
-            rowKey="id"
-            pagination={{
-              pageSize: 10,
-              showSizeChanger: true,
-              showTotal: (total) => `Total ${total} invoices`,
-            }}
-          />
-        </Space>
+          <div className="overflow-x-auto">
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={filteredInvoices}
+              rowKey="id"
+              pagination={{
+                pageSize: 10,
+                showSizeChanger: true,
+                showTotal: (total) => `Total ${total} invoices`,
+              }}
+              scroll={{ x: 800 }}
+            />
+          </div>
+        </div>
       </Card>
 
       <Modal
         title="Invoice Details"
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
-        width={800}
+        className="w-full max-w-4xl"
         footer={[
-          <Button key="close" onClick={() => setIsModalVisible(false)}>
+          <Button key="close" onClick={() => setIsModalVisible(false)} className="w-full sm:w-auto">
             Close
           </Button>,
           selectedInvoice?.status === 'pending' && (
@@ -393,6 +399,7 @@ export default function InvoicesPage() {
                 handleReject(selectedInvoice.id)
                 setIsModalVisible(false)
               }}
+              className="w-full sm:w-auto"
             >
               Reject
             </Button>
@@ -406,6 +413,7 @@ export default function InvoicesPage() {
                 handleApprove(selectedInvoice.id)
                 setIsModalVisible(false)
               }}
+              className="w-full sm:w-auto"
             >
               Approve
             </Button>
@@ -414,7 +422,7 @@ export default function InvoicesPage() {
       >
         {selectedInvoice && (
           <div className="space-y-4">
-            <Descriptions bordered column={2}>
+            <Descriptions bordered column={{ xs: 1, sm: 2 }}>
               <Descriptions.Item label="Invoice #" span={1}>
                 {selectedInvoice.invoiceNumber}
               </Descriptions.Item>
@@ -440,7 +448,7 @@ export default function InvoicesPage() {
                 ${selectedInvoice.taxAmount?.toLocaleString()}
               </Descriptions.Item>
               <Descriptions.Item label="Total Amount" span={2}>
-                <span className="text-xl font-bold text-green-600">
+                <span className="text-lg sm:text-xl font-bold text-green-600">
                   {selectedInvoice.currency} ${selectedInvoice.totalAmount.toLocaleString()}
                 </span>
               </Descriptions.Item>
@@ -462,38 +470,41 @@ export default function InvoicesPage() {
             </Descriptions>
 
             <Card title="Line Items" size="small">
-              <Table
-                dataSource={selectedInvoice.items}
-                rowKey="id"
-                pagination={false}
-                size="small"
-                columns={[
-                  {
-                    title: 'Description',
-                    dataIndex: 'description',
-                    key: 'description',
-                  },
-                  {
-                    title: 'Quantity',
-                    dataIndex: 'quantity',
-                    key: 'quantity',
-                  },
-                  {
-                    title: 'Unit Price',
-                    dataIndex: 'unitPrice',
-                    key: 'unitPrice',
-                    render: (price: number) => `$${price.toLocaleString()}`,
-                  },
-                  {
-                    title: 'Amount',
-                    dataIndex: 'amount',
-                    key: 'amount',
-                    render: (amount: number) => (
-                      <span className="font-medium">${amount.toLocaleString()}</span>
-                    ),
-                  },
-                ]}
-              />
+              <div className="overflow-x-auto">
+                <Table
+                  dataSource={selectedInvoice.items}
+                  rowKey="id"
+                  pagination={false}
+                  size="small"
+                  scroll={{ x: 600 }}
+                  columns={[
+                    {
+                      title: 'Description',
+                      dataIndex: 'description',
+                      key: 'description',
+                    },
+                    {
+                      title: 'Quantity',
+                      dataIndex: 'quantity',
+                      key: 'quantity',
+                    },
+                    {
+                      title: 'Unit Price',
+                      dataIndex: 'unitPrice',
+                      key: 'unitPrice',
+                      render: (price: number) => `$${price.toLocaleString()}`,
+                    },
+                    {
+                      title: 'Amount',
+                      dataIndex: 'amount',
+                      key: 'amount',
+                      render: (amount: number) => (
+                        <span className="font-medium">${amount.toLocaleString()}</span>
+                      ),
+                    },
+                  ]}
+                />
+              </div>
             </Card>
           </div>
         )}
@@ -507,7 +518,7 @@ export default function InvoicesPage() {
           setSelectedInvoice(null)
         }}
         onOk={handleSaveEdit}
-        width={600}
+        className="w-full max-w-lg"
       >
         <Form form={editForm} layout="vertical">
           <Form.Item name="invoiceNumber" label="Invoice Number" rules={[{ required: true }]}>

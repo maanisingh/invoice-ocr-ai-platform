@@ -194,14 +194,14 @@ export default function APIKeysPage() {
   ]
 
   return (
-    <div className="p-6">
+    <div className="p-4 md:p-6">
       {/* Header */}
-      <div className="mb-6">
-        <Title level={2} className="heading-enterprise mb-2">
+      <div className="mb-4 md:mb-6">
+        <Title level={2} className="heading-enterprise mb-2 text-xl md:text-2xl lg:text-3xl">
           <ApiOutlined className="mr-2" />
           API Keys
         </Title>
-        <Text className="text-enterprise">
+        <Text className="text-enterprise text-sm md:text-base">
           Manage your API keys to integrate invoice data into your applications
         </Text>
       </div>
@@ -213,7 +213,7 @@ export default function APIKeysPage() {
         type="info"
         showIcon
         closable
-        className="mb-6"
+        className="mb-4 md:mb-6"
         style={{ borderRadius: '8px' }}
       />
 
@@ -237,19 +237,21 @@ export default function APIKeysPage() {
           </Button>
         }
       >
-        <Table
-          columns={columns}
-          dataSource={apiKeys}
-          rowKey="id"
-          pagination={false}
-          locale={{
-            emptyText: 'No API keys yet. Create your first one to get started!',
-          }}
-        />
+        <div className="overflow-x-auto">
+          <Table
+            columns={columns}
+            dataSource={apiKeys}
+            rowKey="id"
+            pagination={false}
+            locale={{
+              emptyText: 'No API keys yet. Create your first one to get started!',
+            }}
+          />
+        </div>
       </Card>
 
       {/* Documentation Card */}
-      <Card className="enterprise-card mt-6" title="API Documentation">
+      <Card className="enterprise-card mt-4 md:mt-6" title="API Documentation">
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div>
             <Text strong className="text-base">Base URL</Text>

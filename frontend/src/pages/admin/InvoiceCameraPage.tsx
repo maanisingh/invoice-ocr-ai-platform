@@ -50,17 +50,18 @@ export default function InvoiceCameraPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center gap-4">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <Button
           icon={<ArrowLeftOutlined />}
           onClick={() => navigate('/admin/invoices')}
+          className="w-full sm:w-auto"
         >
           Back
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Upload Invoice</h1>
-          <p className="text-gray-500 mt-1">Capture or upload invoice for OCR processing</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">Upload Invoice</h1>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">Capture or upload invoice for OCR processing</p>
         </div>
       </div>
 
@@ -88,7 +89,7 @@ export default function InvoiceCameraPage() {
                         className="max-w-full mx-auto rounded-lg shadow-lg mb-4"
                         style={{ maxHeight: '400px' }}
                       />
-                      <Button onClick={() => setCapturedImage(null)}>
+                      <Button onClick={() => setCapturedImage(null)} className="w-full sm:w-auto">
                         Retake Photo
                       </Button>
                     </div>
@@ -105,12 +106,12 @@ export default function InvoiceCameraPage() {
               ),
               children: (
                 <div className="py-4">
-                  <Dragger {...uploadProps} style={{ padding: '40px' }}>
+                  <Dragger {...uploadProps} className="p-4 sm:p-10">
                     <p className="ant-upload-drag-icon">
-                      <UploadOutlined style={{ fontSize: 48, color: '#1677ff' }} />
+                      <UploadOutlined style={{ fontSize: 32, color: '#1677ff' }} className="sm:text-4xl" />
                     </p>
-                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                    <p className="ant-upload-hint">
+                    <p className="ant-upload-text text-sm sm:text-base">Click or drag file to this area to upload</p>
+                    <p className="ant-upload-hint text-xs sm:text-sm">
                       Support for single file upload. Accepts images (JPG, PNG) or PDF files.
                     </p>
                   </Dragger>
@@ -135,6 +136,7 @@ export default function InvoiceCameraPage() {
               placeholder="Choose client for this invoice"
               showSearch
               optionFilterProp="children"
+              className="w-full"
             >
               {mockClients.map((client) => (
                 <Option key={client.id} value={client.id}>
@@ -151,24 +153,26 @@ export default function InvoiceCameraPage() {
             <TextArea
               rows={3}
               placeholder="Add any additional notes or context for this invoice..."
+              className="w-full"
             />
           </Form.Item>
 
           <Form.Item>
-            <Space>
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 type="primary"
                 htmlType="submit"
                 size="large"
                 loading={uploading}
                 disabled={!capturedImage && activeTab === 'camera'}
+                className="w-full sm:w-auto"
               >
                 Upload & Process Invoice
               </Button>
-              <Button size="large" onClick={() => navigate('/admin/invoices')}>
+              <Button size="large" onClick={() => navigate('/admin/invoices')} className="w-full sm:w-auto">
                 Cancel
               </Button>
-            </Space>
+            </div>
           </Form.Item>
         </Form>
       </Card>

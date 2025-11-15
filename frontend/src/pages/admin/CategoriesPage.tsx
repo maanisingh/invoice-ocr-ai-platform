@@ -121,11 +121,12 @@ export default function CategoriesPage() {
   ]
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="space-y-4 md:space-y-6">
+      {/* Header Section - Responsive */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Categories</h1>
-          <p className="text-gray-500 mt-1">Manage invoice categories</p>
+          <h1 className="text-2xl md:text-3xl font-bold">Categories</h1>
+          <p className="text-gray-500 mt-1 text-sm md:text-base">Manage invoice categories</p>
         </div>
         <Button
           type="primary"
@@ -135,15 +136,36 @@ export default function CategoriesPage() {
             form.resetFields()
             setIsModalVisible(true)
           }}
+          className="w-full sm:w-auto"
+          size="large"
         >
-          Add Category
+          <span className="hidden sm:inline">Add Category</span>
+          <span className="sm:hidden">Add</span>
         </Button>
       </div>
 
-      <Card>
-        <Table columns={columns} dataSource={categories} rowKey="id" />
+      {/* Table Card - Responsive */}
+      <Card className="overflow-hidden">
+        <div className="overflow-x-auto">
+          <Table
+            columns={columns}
+            dataSource={categories}
+            rowKey="id"
+            scroll={{ x: 800 }}
+            size="middle"
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} categories`,
+              className: "px-4 py-2"
+            }}
+            className="enterprise-table"
+          />
+        </div>
       </Card>
 
+      {/* Modal - Responsive */}
       <Modal
         title={editingCategory ? 'Edit Category' : 'Add Category'}
         open={isModalVisible}
@@ -153,19 +175,47 @@ export default function CategoriesPage() {
           form.resetFields()
         }}
         onOk={handleSave}
+        width={window.innerWidth < 640 ? '95%' : 520}
+        className="responsive-modal"
+        okText="Save"
+        cancelText="Cancel"
       >
-        <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-            <Input />
+        <Form
+          form={form}
+          layout="vertical"
+          className="mt-4"
+        >
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: 'Please enter category name' }]}
+          >
+            <Input
+              placeholder="Enter category name"
+              size="large"
+            />
           </Form.Item>
+
           <Form.Item name="description" label="Description">
-            <Input.TextArea rows={2} />
+            <Input.TextArea
+              rows={window.innerWidth < 640 ? 2 : 3}
+              placeholder="Enter category description"
+              size="large"
+            />
           </Form.Item>
+
           <Form.Item name="accountCode" label="Account Code">
-            <Input placeholder="e.g., 6100" />
+            <Input
+              placeholder="e.g., 6100"
+              size="large"
+            />
           </Form.Item>
+
           <Form.Item name="keywords" label="Keywords">
-            <Input placeholder="Comma-separated keywords" />
+            <Input
+              placeholder="Comma-separated keywords (e.g., office, supplies, equipment)"
+              size="large"
+            />
           </Form.Item>
         </Form>
       </Modal>

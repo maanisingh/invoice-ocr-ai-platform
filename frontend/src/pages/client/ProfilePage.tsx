@@ -16,22 +16,22 @@ export default function ClientProfilePage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-4 px-4 sm:px-6 lg:px-8">
       <div>
-        <h1 className="text-3xl font-bold">My Profile</h1>
-        <p className="text-gray-500 mt-1">Manage your account settings</p>
+        <h1 className="text-2xl sm:text-3xl font-bold">My Profile</h1>
+        <p className="text-gray-500 mt-1 text-sm sm:text-base">Manage your account settings</p>
       </div>
 
-      <Card title="Profile Information">
-        <div className="flex items-center gap-6 mb-6">
-          <Avatar size={100} src={user?.avatar} icon={<UserOutlined />} />
+      <Card title="Profile Information" className="w-full">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 mb-6">
+          <Avatar size={{ xs: 80, sm: 100 }} src={user?.avatar} icon={<UserOutlined />} className="flex-shrink-0" />
           <Upload
             beforeUpload={() => {
               message.success('Profile picture updated')
               return false
             }}
           >
-            <Button icon={<UploadOutlined />}>Change Photo</Button>
+            <Button icon={<UploadOutlined />} size="small" className="sm:size-default">Change Photo</Button>
           </Upload>
         </div>
 

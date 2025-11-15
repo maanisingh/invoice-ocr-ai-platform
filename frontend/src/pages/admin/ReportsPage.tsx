@@ -39,31 +39,31 @@ export default function ReportsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Reports</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Reports</h1>
           <p className="text-gray-500 mt-1">Analytics and insights</p>
         </div>
-        <Space>
-          <Button icon={<FileExcelOutlined />}>Export Excel</Button>
-          <Button icon={<FilePdfOutlined />}>Export PDF</Button>
+        <Space className="flex flex-col sm:flex-row gap-2">
+          <Button icon={<FileExcelOutlined />} className="w-full sm:w-auto">Export Excel</Button>
+          <Button icon={<FilePdfOutlined />} className="w-full sm:w-auto">Export PDF</Button>
         </Space>
       </div>
 
       <Card>
-        <Space size="large" wrap>
+        <Space size="large" wrap className="w-full">
           <Select
             value={reportType}
             onChange={setReportType}
-            style={{ width: 200 }}
+            className="w-full sm:w-48"
           >
             <Option value="summary">Summary Report</Option>
             <Option value="category">By Category</Option>
             <Option value="vendor">By Vendor</Option>
             <Option value="client">By Client</Option>
           </Select>
-          <RangePicker />
-          <Button type="primary" icon={<DownloadOutlined />}>
+          <RangePicker className="w-full sm:w-auto" />
+          <Button type="primary" icon={<DownloadOutlined />} className="w-full sm:w-auto">
             Generate Report
           </Button>
         </Space>
@@ -109,7 +109,7 @@ export default function ReportsPage() {
                   cy="50%"
                   labelLine={false}
                   label={(entry) => `$${(entry.amount / 1000).toFixed(0)}k`}
-                  outerRadius={100}
+                  outerRadius="40%"
                   fill="#8884d8"
                   dataKey="amount"
                 >
@@ -128,7 +128,7 @@ export default function ReportsPage() {
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={reportData.byCategory}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
             <YAxis yAxisId="left" orientation="left" />
             <YAxis yAxisId="right" orientation="right" />
             <Tooltip />

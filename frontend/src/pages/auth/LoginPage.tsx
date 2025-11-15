@@ -32,28 +32,30 @@ export default function LoginPage() {
 
   return (
     <Card
-      className="glass-effect shadow-enterprise-lg"
+      className="glass-effect shadow-enterprise-lg p-4 md:p-6 lg:p-8"
       bordered={false}
       style={{
         borderRadius: '20px',
         overflow: 'hidden',
+        maxWidth: '480px',
+        width: '100%',
       }}
     >
       {/* Header Section */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-6 md:mb-8">
         <div
-          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
+          className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-2xl mb-4"
           style={{
             background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
             boxShadow: '0 8px 24px rgba(59, 130, 246, 0.3)'
           }}
         >
-          <SafetyOutlined style={{ fontSize: '32px', color: 'white' }} />
+          <SafetyOutlined style={{ fontSize: '24px', color: 'white' }} className="md:text-3xl" />
         </div>
-        <Title level={2} className="heading-enterprise mb-2" style={{ fontSize: '28px', marginBottom: '8px' }}>
+        <Title level={2} className="heading-enterprise mb-2 text-xl md:text-2xl lg:text-3xl" style={{ marginBottom: '8px' }}>
           Invoice OCR Platform
         </Title>
-        <Text className="text-enterprise" style={{ fontSize: '15px' }}>
+        <Text className="text-enterprise text-sm md:text-base">
           Sign in to access your intelligent invoice management system
         </Text>
       </div>
@@ -99,13 +101,13 @@ export default function LoginPage() {
           />
         </Form.Item>
 
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-6">
           <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox className="text-enterprise">Remember me</Checkbox>
+            <Checkbox className="text-enterprise text-sm">Remember me</Checkbox>
           </Form.Item>
           <a
             href="#"
-            className="font-medium"
+            className="font-medium text-sm"
             style={{ color: '#3b82f6' }}
           >
             Forgot password?
@@ -170,8 +172,8 @@ export default function LoginPage() {
       </Space>
 
       {/* Register Link */}
-      <div className="text-center mt-8 pt-6" style={{ borderTop: '1px solid #e2e8f0' }}>
-        <Text className="text-enterprise">
+      <div className="text-center mt-6 md:mt-8 pt-4 md:pt-6" style={{ borderTop: '1px solid #e2e8f0' }}>
+        <Text className="text-enterprise text-sm md:text-base">
           Don't have an account?{' '}
           <Link
             to="/register"
@@ -184,8 +186,8 @@ export default function LoginPage() {
       </div>
 
       {/* Security Badge */}
-      <div className="text-center mt-4">
-        <Text type="secondary" style={{ fontSize: '12px' }}>
+      <div className="text-center mt-3 md:mt-4">
+        <Text type="secondary" style={{ fontSize: '11px' }} className="md:text-xs">
           <SafetyOutlined style={{ marginRight: '4px' }} />
           Enterprise-grade security & encryption
         </Text>

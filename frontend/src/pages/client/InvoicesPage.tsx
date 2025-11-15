@@ -106,13 +106,13 @@ export default function ClientInvoicesPage() {
   ]
 
   return (
-    <div className="space-y-6">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
-        <div style={{ minWidth: '200px' }}>
-          <h1 className="text-3xl font-bold">My Invoices</h1>
+    <div className="space-y-6 p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+        <div className="min-w-0 sm:min-w-[200px]">
+          <h1 className="text-2xl sm:text-3xl font-bold">My Invoices</h1>
           <p className="text-gray-500 mt-1">View and manage your invoices</p>
         </div>
-        <Space wrap style={{ flexShrink: 0 }}>
+        <Space wrap className="flex-shrink-0">
           <Button
             icon={<UploadOutlined />}
             onClick={() => setIsUploadModalVisible(true)}
@@ -131,16 +131,16 @@ export default function ClientInvoicesPage() {
 
       <Card>
         <Space direction="vertical" className="w-full" size="middle">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4 items-start sm:items-center">
             <Input
               placeholder="Search invoices..."
               prefix={<SearchOutlined />}
-              style={{ minWidth: 250, maxWidth: 300, flex: '1 1 250px' }}
+              className="min-w-[250px] max-w-[300px] flex-1 sm:flex-initial"
               allowClear
             />
             <Select
               placeholder="Filter by Status"
-              style={{ minWidth: 150, width: 200 }}
+              className="min-w-[150px] w-[200px]"
               allowClear
             >
               <Option value="pending">Pending</Option>
@@ -148,13 +148,14 @@ export default function ClientInvoicesPage() {
               <Option value="rejected">Rejected</Option>
               <Option value="processing">Processing</Option>
             </Select>
-            <RangePicker style={{ minWidth: 200 }} />
+            <RangePicker className="min-w-[200px]" />
           </div>
 
           <Table
             columns={columns}
             dataSource={invoices}
             rowKey="id"
+            scroll={{ x: 'max-content' }}
             pagination={{
               pageSize: 10,
               showSizeChanger: true,
@@ -168,7 +169,8 @@ export default function ClientInvoicesPage() {
         title="Invoice Details"
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
-        width={800}
+        width="90vw"
+        style={{ maxWidth: 800 }}
         footer={[
           <Button key="close" onClick={() => setIsModalVisible(false)}>
             Close
@@ -184,14 +186,14 @@ export default function ClientInvoicesPage() {
         ]}
       >
         {selectedInvoice && (
-          <Descriptions bordered column={2}>
+          <Descriptions bordered column={1} className="sm:column-2">
             <Descriptions.Item label="Invoice #" span={1}>
               {selectedInvoice.invoiceNumber}
             </Descriptions.Item>
             <Descriptions.Item label="Status" span={1}>
               <StatusBadge status={selectedInvoice.status} />
             </Descriptions.Item>
-            <Descriptions.Item label="Vendor" span={2}>
+            <Descriptions.Item label="Vendor" span={1}>
               {selectedInvoice.vendorName}
             </Descriptions.Item>
             <Descriptions.Item label="Invoice Date" span={1}>
@@ -200,12 +202,12 @@ export default function ClientInvoicesPage() {
             <Descriptions.Item label="Due Date" span={1}>
               {selectedInvoice.dueDate ? dayjs(selectedInvoice.dueDate).format('MMM DD, YYYY') : 'N/A'}
             </Descriptions.Item>
-            <Descriptions.Item label="Total Amount" span={2}>
+            <Descriptions.Item label="Total Amount" span={1}>
               <span className="text-xl font-bold text-green-600">
                 ${selectedInvoice.totalAmount.toLocaleString()}
               </span>
             </Descriptions.Item>
-            <Descriptions.Item label="OCR Confidence" span={2}>
+            <Descriptions.Item label="OCR Confidence" span={1}>
               <ConfidenceBadge confidence={selectedInvoice.ocrConfidence} />
             </Descriptions.Item>
           </Descriptions>
@@ -217,6 +219,8 @@ export default function ClientInvoicesPage() {
         open={isUploadModalVisible}
         onCancel={() => setIsUploadModalVisible(false)}
         footer={null}
+        width="90vw"
+        style={{ maxWidth: 600 }}
       >
         <Dragger {...uploadProps}>
           <p className="ant-upload-drag-icon">

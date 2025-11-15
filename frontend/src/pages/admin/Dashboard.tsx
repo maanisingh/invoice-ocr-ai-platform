@@ -21,6 +21,8 @@ import { useInvoiceStore } from '@/store/invoiceStore'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { Invoice } from '@/types'
+import { useState, useEffect } from 'react'
+import { getChartHeight, getBreakpoint, getTablePageSize } from '@/utils/responsive'
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
 
@@ -45,6 +47,24 @@ export default function AdminDashboard() {
   const navigate = useNavigate()
   const { getInvoices, approveInvoice, rejectInvoice } = useInvoiceStore()
   const invoices = getInvoices()
+
+  // Responsive state
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [chartHeight, setChartHeight] = useState(getChartHeight(window.innerWidth))
+  const [tablePageSize, setTablePageSize] = useState(getTablePageSize(window.innerWidth))
+  const currentBreakpoint = getBreakpoint(windowWidth)
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newWidth = window.innerWidth
+      setWindowWidth(newWidth)
+      setChartHeight(getChartHeight(newWidth))
+      setTablePageSize(getTablePageSize(newWidth))
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const handleApprove = (id: string) => {
     approveInvoice(id)
@@ -247,37 +267,39 @@ export default function AdminDashboard() {
             className="enterprise-chart-card"
             bordered={false}
           >
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={chartHeight}>
               <LineChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis
                   dataKey="month"
                   stroke="#64748b"
-                  style={{ fontSize: '12px', fontWeight: 500 }}
+                  style={{ fontSize: currentBreakpoint === 'xs' ? '10px' : '12px', fontWeight: 500 }}
+                  interval={currentBreakpoint === 'xs' ? 1 : 0}
                 />
                 <YAxis
                   yAxisId="left"
                   stroke="#64748b"
-                  style={{ fontSize: '12px', fontWeight: 500 }}
+                  style={{ fontSize: currentBreakpoint === 'xs' ? '10px' : '12px', fontWeight: 500 }}
                 />
                 <YAxis
                   yAxisId="right"
                   orientation="right"
                   stroke="#64748b"
-                  style={{ fontSize: '12px', fontWeight: 500 }}
+                  style={{ fontSize: currentBreakpoint === 'xs' ? '10px' : '12px', fontWeight: 500 }}
                 />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#ffffff',
                     border: '1px solid #e2e8f0',
                     borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    fontSize: currentBreakpoint === 'xs' ? '12px' : '14px'
                   }}
                 />
                 <Legend
                   wrapperStyle={{
                     paddingTop: '20px',
-                    fontSize: '14px',
+                    fontSize: currentBreakpoint === 'xs' ? '12px' : '14px',
                     fontWeight: 500
                   }}
                 />
@@ -286,20 +308,20 @@ export default function AdminDashboard() {
                   type="monotone"
                   dataKey="amount"
                   stroke="#3b82f6"
-                  strokeWidth={3}
+                  strokeWidth={currentBreakpoint === 'xs' ? 2 : 3}
                   name="Amount ($)"
-                  dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
-                  activeDot={{ r: 6 }}
+                  dot={{ fill: '#3b82f6', strokeWidth: 2, r: currentBreakpoint === 'xs' ? 3 : 4 }}
+                  activeDot={{ r: currentBreakpoint === 'xs' ? 5 : 6 }}
                 />
                 <Line
                   yAxisId="right"
                   type="monotone"
                   dataKey="invoices"
                   stroke="#10b981"
-                  strokeWidth={3}
+                  strokeWidth={currentBreakpoint === 'xs' ? 2 : 3}
                   name="Invoice Count"
-                  dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
-                  activeDot={{ r: 6 }}
+                  dot={{ fill: '#10b981', strokeWidth: 2, r: currentBreakpoint === 'xs' ? 3 : 4 }}
+                  activeDot={{ r: currentBreakpoint === 'xs' ? 5 : 6 }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -311,15 +333,15 @@ export default function AdminDashboard() {
             className="enterprise-chart-card"
             bordered={false}
           >
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={chartHeight}>
               <PieChart>
                 <Pie
                   data={categoryData}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={(entry) => `$${(entry.value / 1000).toFixed(0)}k`}
-                  outerRadius={90}
+                  label={currentBreakpoint === 'xs' ? false : (entry: { value: number }) => `$${(entry.value / 1000).toFixed(0)}k`}
+                  outerRadius={currentBreakpoint === 'xs' ? 70 : 90}
                   fill="#8884d8"
                   dataKey="value"
                 >
@@ -332,7 +354,8 @@ export default function AdminDashboard() {
                     backgroundColor: '#ffffff',
                     border: '1px solid #e2e8f0',
                     borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    fontSize: currentBreakpoint === 'xs' ? '12px' : '14px'
                   }}
                 />
               </PieChart>
@@ -365,30 +388,32 @@ export default function AdminDashboard() {
             className="enterprise-chart-card"
             bordered={false}
           >
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={chartHeight}>
               <BarChart data={categoryData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis
                   dataKey="name"
                   stroke="#64748b"
-                  style={{ fontSize: '12px', fontWeight: 500 }}
+                  style={{ fontSize: currentBreakpoint === 'xs' ? '10px' : '12px', fontWeight: 500 }}
+                  interval={currentBreakpoint === 'xs' ? 1 : 0}
                 />
                 <YAxis
                   stroke="#64748b"
-                  style={{ fontSize: '12px', fontWeight: 500 }}
+                  style={{ fontSize: currentBreakpoint === 'xs' ? '10px' : '12px', fontWeight: 500 }}
                 />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#ffffff',
                     border: '1px solid #e2e8f0',
                     borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    fontSize: currentBreakpoint === 'xs' ? '12px' : '14px'
                   }}
                 />
                 <Legend
                   wrapperStyle={{
                     paddingTop: '20px',
-                    fontSize: '14px',
+                    fontSize: currentBreakpoint === 'xs' ? '12px' : '14px',
                     fontWeight: 500
                   }}
                 />
@@ -416,10 +441,12 @@ export default function AdminDashboard() {
       >
         <Table
           columns={columns}
-          dataSource={invoices.slice(0, 5)}
+          dataSource={invoices.slice(0, tablePageSize)}
           rowKey="id"
           pagination={false}
           className="enterprise-table"
+          size={currentBreakpoint === 'xs' ? 'small' : 'middle'}
+          scroll={{ x: currentBreakpoint === 'xs' ? 800 : undefined }}
         />
       </Card>
               </>

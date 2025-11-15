@@ -26,22 +26,22 @@ const monthlyData = [
 
 export default function ClientReportsPage() {
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">My Reports</h1>
-          <p className="text-gray-500 mt-1">Personal expense reports and insights</p>
+    <div className="space-y-4 md:space-y-6 px-2 sm:px-4 lg:px-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold">My Reports</h1>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">Personal expense reports and insights</p>
         </div>
-        <Space>
-          <Button icon={<FileExcelOutlined />}>Export Excel</Button>
-          <Button icon={<FilePdfOutlined />}>Export PDF</Button>
+        <Space wrap className="flex-shrink-0">
+          <Button icon={<FileExcelOutlined />} size="small" className="w-full sm:w-auto">Export Excel</Button>
+          <Button icon={<FilePdfOutlined />} size="small" className="w-full sm:w-auto">Export PDF</Button>
         </Space>
       </div>
 
-      <Card>
-        <Space size="large" wrap>
-          <RangePicker />
-          <Button type="primary" icon={<DownloadOutlined />}>
+      <Card className="w-full">
+        <Space size="large" wrap className="flex flex-col sm:flex-row gap-2">
+          <RangePicker className="w-full sm:w-auto" />
+          <Button type="primary" icon={<DownloadOutlined />} className="w-full sm:w-auto">
             Generate Report
           </Button>
         </Space>
@@ -65,11 +65,11 @@ export default function ClientReportsPage() {
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={16}>
           <Card title="Monthly Expenses" className="card-hover">
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer width="100%" height={300} className="min-h-[300px]">
               <LineChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
+                <XAxis dataKey="month" fontSize={12} />
+                <YAxis fontSize={12} />
                 <Tooltip />
                 <Legend />
                 <Line
@@ -85,7 +85,7 @@ export default function ClientReportsPage() {
         </Col>
         <Col xs={24} lg={8}>
           <Card title="Category Breakdown" className="card-hover">
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer width="100%" height={300} className="min-h-[300px]">
               <PieChart>
                 <Pie
                   data={categoryData}
@@ -93,7 +93,7 @@ export default function ClientReportsPage() {
                   cy="50%"
                   labelLine={false}
                   label={(entry) => `$${(entry.amount / 1000).toFixed(1)}k`}
-                  outerRadius={100}
+                  outerRadius={80}
                   fill="#8884d8"
                   dataKey="amount"
                 >
@@ -109,11 +109,11 @@ export default function ClientReportsPage() {
       </Row>
 
       <Card title="Expenses by Category" className="card-hover">
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer width="100%" height={300} className="min-h-[300px]">
           <BarChart data={categoryData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis dataKey="name" fontSize={12} angle={-45} textAnchor="end" height={60} />
+            <YAxis fontSize={12} />
             <Tooltip />
             <Legend />
             <Bar dataKey="amount" fill="#1677ff" name="Amount ($)" />

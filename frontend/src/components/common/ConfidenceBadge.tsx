@@ -23,9 +23,11 @@ export default function ConfidenceBadge({ confidence }: ConfidenceBadgeProps) {
   }
 
   return (
-    <Tooltip title={`OCR Confidence: ${percentage}%`}>
+    <Tooltip title={`OCR Confidence: ${percentage}%`} placement="top">
       <Tag color={color} icon={icon}>
-        {text} ({percentage}%)
+        <span className="text-xs md:text-sm font-medium">
+          {text} ({percentage}%)
+        </span>
       </Tag>
     </Tooltip>
   )

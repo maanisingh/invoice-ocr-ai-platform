@@ -12,6 +12,8 @@ import StatusBadge from '@/components/common/StatusBadge'
 import { useInvoiceStore } from '@/store/invoiceStore'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
+import { useState, useEffect } from 'react'
+import { getChartHeight, getTablePageSize, formatDateResponsive } from '@/utils/responsive'
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
 
@@ -37,6 +39,17 @@ export default function ClientDashboard() {
   const allInvoices = getInvoices()
   const clientInvoices = allInvoices.slice(0, 8)
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const chartHeight = getChartHeight(windowWidth)
+  const tablePageSize = getTablePageSize(windowWidth)
+
   const columns = [
     {
       title: 'Invoice #',
@@ -59,7 +72,7 @@ export default function ClientDashboard() {
       dataIndex: 'invoiceDate',
       key: 'invoiceDate',
       render: (date: string) => (
-        <span className="text-slate-600">{dayjs(date).format('MMM DD, YYYY')}</span>
+        <span className="text-slate-600">{formatDateResponsive(date, windowWidth)}</span>
       ),
     },
     {
@@ -98,8 +111,8 @@ export default function ClientDashboard() {
     <div className="enterprise-page-content">
       {/* Page Header */}
       <div className="enterprise-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
-        <div style={{ minWidth: '200px' }}>
-          <h1 className="enterprise-page-title">Dashboard</h1>
+        <div style={{ minWidth: windowWidth < 640 ? '150px' : '200px' }}>
+          <h1 className="enterprise-page-title" style={{ fontSize: windowWidth < 640 ? '20px' : windowWidth < 768 ? '24px' : '32px' }}>Dashboard</h1>
           <p className="enterprise-page-subtitle">
             Welcome back! Here's your overview
           </p>
@@ -110,21 +123,21 @@ export default function ClientDashboard() {
             icon={<UploadOutlined />}
             onClick={() => navigate('/client/upload/camera')}
             className="enterprise-btn-primary"
-            size="large"
+            size={windowWidth < 640 ? 'small' : 'large'}
           >
-            Upload Invoice
+            {windowWidth < 640 ? 'Upload' : 'Upload Invoice'}
           </Button>
         </Space>
       </div>
 
       {/* Stat Cards */}
-      <Row gutter={[24, 24]} className="enterprise-grid mb-8">
+      <Row gutter={[windowWidth < 640 ? 16 : 24, windowWidth < 640 ? 16 : 24]} className="enterprise-grid mb-8">
         <Col xs={24} sm={12} lg={8}>
           <Card className="enterprise-stat-card" bordered={false}>
             <div className="stat-card-icon icon-blue">
               <FileTextOutlined />
             </div>
-            <div className="stat-card-value">
+            <div className="stat-card-value" style={{ fontSize: windowWidth < 640 ? '24px' : '32px' }}>
               {clientInvoices.length}
             </div>
             <div className="stat-card-title">My Invoices</div>
@@ -139,7 +152,7 @@ export default function ClientDashboard() {
             <div className="stat-card-icon icon-orange">
               <ClockCircleOutlined />
             </div>
-            <div className="stat-card-value">
+            <div className="stat-card-value" style={{ fontSize: windowWidth < 640 ? '24px' : '32px' }}>
               {clientInvoices.filter(i => i.status === 'pending').length}
             </div>
             <div className="stat-card-title">Pending Review</div>
@@ -153,7 +166,7 @@ export default function ClientDashboard() {
             <div className="stat-card-icon icon-green">
               <DollarOutlined />
             </div>
-            <div className="stat-card-value">
+            <div className="stat-card-value" style={{ fontSize: windowWidth < 640 ? '24px' : '32px' }}>
               $74,000
             </div>
             <div className="stat-card-title">Total Spending</div>
@@ -166,37 +179,38 @@ export default function ClientDashboard() {
       </Row>
 
       {/* Charts */}
-      <Row gutter={[24, 24]} className="enterprise-grid mb-8">
+      <Row gutter={[windowWidth < 640 ? 16 : 24, windowWidth < 640 ? 16 : 24]} className="enterprise-grid mb-8">
         <Col xs={24} lg={16}>
           <Card
             title="Monthly Spending"
             className="enterprise-chart-card"
             bordered={false}
           >
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={chartHeight}>
               <LineChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis
                   dataKey="month"
                   stroke="#64748b"
-                  style={{ fontSize: '12px', fontWeight: 500 }}
+                  style={{ fontSize: windowWidth < 640 ? '10px' : '12px', fontWeight: 500 }}
                 />
                 <YAxis
                   stroke="#64748b"
-                  style={{ fontSize: '12px', fontWeight: 500 }}
+                  style={{ fontSize: windowWidth < 640 ? '10px' : '12px', fontWeight: 500 }}
                 />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#ffffff',
                     border: '1px solid #e2e8f0',
                     borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    fontSize: windowWidth < 640 ? '12px' : '14px'
                   }}
                 />
                 <Legend
                   wrapperStyle={{
                     paddingTop: '20px',
-                    fontSize: '14px',
+                    fontSize: windowWidth < 640 ? '12px' : '14px',
                     fontWeight: 500
                   }}
                 />
@@ -219,7 +233,7 @@ export default function ClientDashboard() {
             className="enterprise-chart-card"
             bordered={false}
           >
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={chartHeight}>
               <PieChart>
                 <Pie
                   data={categoryData}
@@ -227,7 +241,7 @@ export default function ClientDashboard() {
                   cy="50%"
                   labelLine={false}
                   label={(entry) => `$${(entry.value / 1000).toFixed(1)}k`}
-                  outerRadius={90}
+                  outerRadius={windowWidth < 640 ? 70 : 90}
                   fill="#8884d8"
                   dataKey="value"
                 >
@@ -240,7 +254,8 @@ export default function ClientDashboard() {
                     backgroundColor: '#ffffff',
                     border: '1px solid #e2e8f0',
                     borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    fontSize: windowWidth < 640 ? '12px' : '14px'
                   }}
                 />
               </PieChart>
@@ -282,7 +297,7 @@ export default function ClientDashboard() {
       >
         <Table
           columns={columns}
-          dataSource={clientInvoices.slice(0, 5)}
+          dataSource={clientInvoices.slice(0, tablePageSize)}
           rowKey="id"
           pagination={false}
           className="enterprise-table"

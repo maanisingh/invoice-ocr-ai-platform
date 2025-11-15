@@ -37,7 +37,9 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
   const config = statusConfig[status]
   return (
     <Tag color={config.color} icon={config.icon}>
-      {config.text}
+      <span className="text-xs md:text-sm font-medium">
+        {config.text}
+      </span>
     </Tag>
   )
 }
