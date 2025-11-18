@@ -132,7 +132,7 @@ export default function EnhancedCameraCapture({
   const hasImages = capturedImages.length > 0;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Mode Selector */}
       <CaptureModeSelector
         mode={mode}
@@ -141,7 +141,7 @@ export default function EnhancedCameraCapture({
       />
 
       {/* Camera View or Preview */}
-      <Card className="w-full max-w-3xl mx-auto">
+      <Card className="w-full max-w-3xl mx-auto shadow-sm">
         <AnimatePresence mode="wait">
           {!capturingInProgress ? (
             <motion.div
@@ -150,18 +150,17 @@ export default function EnhancedCameraCapture({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              {/* Camera Instructions */}
-              <div className="text-center mb-4">
-                <Title level={4} className="mb-2">
-                  {mode === 'single' && 'Position receipt in frame'}
-                  {mode === 'batch' && `Capture receipt ${capturedImages.length + 1}`}
-                  {mode === 'multipage' && `Capture page ${capturedImages.length + 1}`}
+              {/* Camera Instructions - Minimal on Mobile */}
+              <div className="text-center mb-2 sm:mb-4">
+                <Title level={5} className="mb-0 sm:mb-2 text-sm sm:text-lg font-semibold">
+                  {mode === 'single' && 'Position receipt'}
+                  {mode === 'batch' && `Receipt ${capturedImages.length + 1}`}
+                  {mode === 'multipage' && `Page ${capturedImages.length + 1}`}
                 </Title>
-                <Text type="secondary">
+                <Text type="secondary" className="hidden sm:block text-sm mt-1">
                   {mode === 'single' && 'Make sure the entire receipt is visible and in focus'}
-                  {mode === 'batch' &&
-                    'After each capture, you can continue adding more receipts'}
-                  {mode === 'multipage' && 'Each page will be combined into a single document'}
+                  {mode === 'batch' && 'After each capture, you can continue adding more'}
+                  {mode === 'multipage' && 'Pages will be combined into one document'}
                 </Text>
               </div>
 
@@ -195,26 +194,32 @@ export default function EnhancedCameraCapture({
                 </div>
               </div>
 
-              {/* Camera Controls */}
-              <Space className="w-full justify-center">
-                <Button size="large" icon={<ReloadOutlined />} onClick={switchCamera}>
-                  Switch Camera
+              {/* Camera Controls - Mobile Optimized */}
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
+                <Button
+                  size="large"
+                  icon={<ReloadOutlined />}
+                  onClick={switchCamera}
+                  className="w-full sm:w-auto"
+                >
+                  <span className="hidden sm:inline">Switch Camera</span>
+                  <span className="sm:hidden">Switch</span>
                 </Button>
                 <Button
                   type="primary"
                   size="large"
                   icon={<CameraOutlined />}
                   onClick={capture}
-                  className="px-8"
+                  className="w-full sm:w-auto sm:px-8"
                 >
                   Capture
                 </Button>
                 {onCancel && (
-                  <Button size="large" onClick={onCancel}>
+                  <Button size="large" onClick={onCancel} className="w-full sm:w-auto">
                     Cancel
                   </Button>
                 )}
-              </Space>
+              </div>
             </motion.div>
           ) : (
             <motion.div
@@ -223,21 +228,26 @@ export default function EnhancedCameraCapture({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
             >
-              {/* Preview */}
-              <div className="text-center mb-4">
-                <Title level={4} className="mb-2">
-                  Review Your Capture
+              {/* Preview - Minimal on Mobile */}
+              <div className="text-center mb-2 sm:mb-4">
+                <Title level={5} className="mb-0 sm:mb-2 text-sm sm:text-lg font-semibold">
+                  Review Capture
                 </Title>
-                <Text type="secondary">Check if the image is clear and readable</Text>
+                <Text type="secondary" className="hidden sm:block text-sm">Check if the image is clear and readable</Text>
               </div>
 
-              <div className="relative bg-black rounded-lg overflow-hidden mb-4">
+              <div className="relative bg-black rounded-lg overflow-hidden mb-3 sm:mb-4">
                 <img src={currentPreview} alt="Captured" className="w-full" />
               </div>
 
-              {/* Preview Controls */}
-              <Space className="w-full justify-center">
-                <Button size="large" icon={<ReloadOutlined />} onClick={retake}>
+              {/* Preview Controls - Mobile Optimized */}
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
+                <Button
+                  size="large"
+                  icon={<ReloadOutlined />}
+                  onClick={retake}
+                  className="w-full sm:w-auto"
+                >
                   Retake
                 </Button>
                 <Button
@@ -245,11 +255,11 @@ export default function EnhancedCameraCapture({
                   size="large"
                   icon={<CheckOutlined />}
                   onClick={confirmCapture}
-                  className="px-8"
+                  className="w-full sm:w-auto sm:px-8"
                 >
                   {mode === 'single' ? 'Confirm' : 'Add to Collection'}
                 </Button>
-              </Space>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -267,28 +277,41 @@ export default function EnhancedCameraCapture({
 
           <Divider />
 
-          {/* Batch/Multipage Actions */}
-          <Card>
-            <div className="flex items-center justify-between">
-              <div>
-                <Title level={5} className="mb-1">
+          {/* Batch/Multipage Actions - App-like Mobile */}
+          <Card className="shadow-sm border-0 sm:border" size="small">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+              <div className="flex-1">
+                <Title level={5} className="mb-0 sm:mb-1 text-sm sm:text-lg">
                   {mode === 'batch'
-                    ? `${capturedImages.length} Receipt${capturedImages.length > 1 ? 's' : ''} Ready`
-                    : `${capturedImages.length} Page${capturedImages.length > 1 ? 's' : ''} Ready`}
+                    ? `${capturedImages.length} Receipt${capturedImages.length > 1 ? 's' : ''}`
+                    : `${capturedImages.length} Page${capturedImages.length > 1 ? 's' : ''}`}
                 </Title>
-                <Text type="secondary">
+                <Text type="secondary" className="hidden sm:block text-sm">
                   {mode === 'batch'
-                    ? 'Each receipt will be processed individually'
-                    : 'Pages will be merged into a single document'}
+                    ? 'Each will be processed individually'
+                    : 'Will be merged into one document'}
                 </Text>
               </div>
 
-              <Space>
-                <Button icon={<DeleteOutlined />} onClick={clearAll} danger>
-                  Clear All
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <Button
+                  icon={<DeleteOutlined />}
+                  onClick={clearAll}
+                  danger
+                  size="small"
+                  className="sm:size-default"
+                >
+                  <span className="hidden sm:inline">Clear All</span>
+                  <span className="sm:hidden">Clear</span>
                 </Button>
-                <Button icon={<PlusOutlined />} onClick={() => setCurrentPreview(null)}>
-                  Add More
+                <Button
+                  icon={<PlusOutlined />}
+                  onClick={() => setCurrentPreview(null)}
+                  size="small"
+                  className="sm:size-default"
+                >
+                  <span className="hidden sm:inline">Add More</span>
+                  <span className="sm:hidden">Add</span>
                 </Button>
                 <Button
                   type="primary"
@@ -296,11 +319,12 @@ export default function EnhancedCameraCapture({
                   icon={<CloudUploadOutlined />}
                   onClick={handleComplete}
                   loading={processing}
-                  className="px-8"
+                  className="w-full sm:w-auto sm:px-8"
                 >
-                  Upload & Process ({capturedImages.length})
+                  <span className="sm:hidden">Upload ({capturedImages.length})</span>
+                  <span className="hidden sm:inline">Upload & Process ({capturedImages.length})</span>
                 </Button>
-              </Space>
+              </div>
             </div>
 
             {processing && (

@@ -17,7 +17,6 @@ import {
   MobileOutlined,
   WarningOutlined,
   SafetyOutlined,
-  DollarOutlined,
   StarOutlined,
   AuditOutlined,
   MailOutlined,
@@ -128,11 +127,6 @@ export default function AdminLayout() {
           key: '/admin/advanced-reports',
           icon: <BarChartOutlined />,
           label: <Link to="/admin/advanced-reports">Advanced Reports</Link>,
-        },
-        {
-          key: '/admin/budget-tracking',
-          icon: <DollarOutlined />,
-          label: <Link to="/admin/budget-tracking">Budget Tracking</Link>,
         },
         {
           key: '/admin/vendor-performance',

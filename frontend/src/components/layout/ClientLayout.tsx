@@ -15,6 +15,9 @@ import {
   DollarOutlined,
   ThunderboltOutlined,
   ShoppingCartOutlined,
+  PieChartOutlined,
+  AppstoreAddOutlined,
+  UploadOutlined,
 } from '@ant-design/icons'
 import { useAuthStore } from '@/store/authStore'
 import { useThemeStore } from '@/store/themeStore'
@@ -70,9 +73,14 @@ export default function ClientLayout() {
           label: <Link to="/client/invoices">My Invoices</Link>,
         },
         {
+          key: '/client/upload',
+          icon: <UploadOutlined />,
+          label: <Link to="/client/upload">Upload Documents</Link>,
+        },
+        {
           key: '/client/upload/camera',
           icon: <CameraOutlined />,
-          label: <Link to="/client/upload/camera">Upload Invoice</Link>,
+          label: <Link to="/client/upload/camera">Camera Capture</Link>,
         },
       ],
     },
@@ -113,6 +121,11 @@ export default function ClientLayout() {
       label: !collapsed && <span className="sidebar-section-header">DEVELOPER</span>,
       children: [
         {
+          key: '/client/integrations',
+          icon: <AppstoreAddOutlined />,
+          label: <Link to="/client/integrations">Integrations</Link>,
+        },
+        {
           key: '/client/api-keys',
           icon: <ApiOutlined />,
           label: <Link to="/client/api-keys">API Keys</Link>,
@@ -140,7 +153,7 @@ export default function ClientLayout() {
         collapsed={collapsed}
         breakpoint="lg"
         onBreakpoint={(broken) => setCollapsed(broken)}
-        className="enterprise-sidebar"
+        className="enterprise-sidebar hidden lg:block"
         style={{
           overflow: 'hidden',
           height: '100vh',
@@ -190,16 +203,19 @@ export default function ClientLayout() {
         </div>
       </Sider>
 
-      <Layout style={{ marginLeft: collapsed ? 80 : 240 }}>
+      <Layout
+        className="ml-0 lg:ml-[240px]"
+      >
+        {/* Desktop Header */}
         <Header
-          className="enterprise-header"
+          className="enterprise-header sm:pr-6 hidden lg:flex"
           style={{
             padding: 0,
             background: isDarkMode ? '#141414' : '#fff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            paddingRight: 24,
+            paddingRight: 12,
             boxShadow: '0 1px 4px rgba(0,21,41,.08)',
             position: 'sticky',
             top: 0,
@@ -239,14 +255,74 @@ export default function ClientLayout() {
         <Content
           style={{
             margin: 0,
-            padding: '24px',
-            minHeight: 'calc(100vh - 64px)',
+            padding: 0,
+            minHeight: '100vh',
             background: '#f8fafc',
             overflowX: 'hidden',
+            paddingBottom: '80px',
           }}
+          className="lg:p-6 lg:pb-6 lg:min-h-[calc(100vh-64px)]"
         >
           <Outlet />
         </Content>
+
+        {/* Mobile Bottom Navigation - Clean & Beautiful */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg">
+          <div className="flex items-center justify-around h-16">
+            <Link
+              to="/client/dashboard"
+              className={`flex flex-col items-center justify-center flex-1 h-full transition-all ${
+                location.pathname === '/client/dashboard'
+                  ? 'text-blue-600 bg-blue-50'
+                  : 'text-gray-500'
+              }`}
+            >
+              <DashboardOutlined style={{ fontSize: 22 }} />
+              <span className="text-[10px] mt-1 font-medium">Home</span>
+            </Link>
+            <Link
+              to="/client/invoices"
+              className={`flex flex-col items-center justify-center flex-1 h-full transition-all ${
+                location.pathname === '/client/invoices'
+                  ? 'text-blue-600 bg-blue-50'
+                  : 'text-gray-500'
+              }`}
+            >
+              <FileTextOutlined style={{ fontSize: 22 }} />
+              <span className="text-[10px] mt-1 font-medium">Invoices</span>
+            </Link>
+            <Link
+              to="/client/upload/camera"
+              className="flex flex-col items-center justify-center flex-1 h-full"
+            >
+              <div className="w-14 h-14 -mt-6 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                <CameraOutlined style={{ fontSize: 26, color: 'white' }} />
+              </div>
+            </Link>
+            <Link
+              to="/client/budget"
+              className={`flex flex-col items-center justify-center flex-1 h-full transition-all ${
+                location.pathname === '/client/budget'
+                  ? 'text-blue-600 bg-blue-50'
+                  : 'text-gray-500'
+              }`}
+            >
+              <BarChartOutlined style={{ fontSize: 22 }} />
+              <span className="text-[10px] mt-1 font-medium">Budget</span>
+            </Link>
+            <Link
+              to="/client/reports"
+              className={`flex flex-col items-center justify-center flex-1 h-full transition-all ${
+                location.pathname === '/client/reports'
+                  ? 'text-blue-600 bg-blue-50'
+                  : 'text-gray-500'
+              }`}
+            >
+              <PieChartOutlined style={{ fontSize: 22 }} />
+              <span className="text-[10px] mt-1 font-medium">Reports</span>
+            </Link>
+          </div>
+        </div>
       </Layout>
     </Layout>
   )

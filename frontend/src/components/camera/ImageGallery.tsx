@@ -18,28 +18,28 @@ export default function ImageGallery({ images, onRemove, onPreview, mode }: Imag
   return (
     <Card
       title={
-        <div className="flex items-center justify-between">
-          <span>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2">
+          <span className="text-sm sm:text-base font-semibold">
             {mode === 'batch' ? 'Captured Receipts' : 'Captured Pages'} ({images.length})
           </span>
           {mode === 'batch' && (
-            <Text type="secondary" className="text-sm font-normal">
+            <Text type="secondary" className="text-xs sm:text-sm font-normal">
               Each image will be processed separately
             </Text>
           )}
           {mode === 'multipage' && (
-            <Text type="secondary" className="text-sm font-normal">
+            <Text type="secondary" className="text-xs sm:text-sm font-normal">
               Pages will be combined into one document
             </Text>
           )}
         </div>
       }
-      className="mt-4"
+      className="mt-3 sm:mt-4 shadow-sm"
     >
-      <Row gutter={[16, 16]}>
+      <Row gutter={[8, 8]}>
         <AnimatePresence>
           {images.map((image, index) => (
-            <Col xs={24} sm={12} md={8} lg={6} key={image.id}>
+            <Col xs={12} sm={12} md={8} lg={6} key={image.id}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -50,16 +50,23 @@ export default function ImageGallery({ images, onRemove, onPreview, mode }: Imag
                   count={mode === 'multipage' ? `Page ${index + 1}` : index + 1}
                   style={{
                     backgroundColor: mode === 'multipage' ? '#722ed1' : '#52c41a',
+                    fontSize: '10px',
+                    padding: '0 4px',
+                    minWidth: '20px',
+                    height: '20px',
+                    lineHeight: '20px',
                   }}
                 >
                   <Card
                     hoverable
+                    size="small"
+                    bodyStyle={{ padding: '8px' }}
                     cover={
                       <div className="relative">
                         <img
                           alt={`Capture ${index + 1}`}
                           src={image.dataUrl}
-                          className="w-full h-48 object-cover"
+                          className="w-full h-32 sm:h-48 object-cover"
                         />
                         {image.processed && (
                           <div className="absolute top-2 right-2">
@@ -74,6 +81,7 @@ export default function ImageGallery({ images, onRemove, onPreview, mode }: Imag
                           type="text"
                           icon={<EyeOutlined />}
                           onClick={() => onPreview?.(image)}
+                          size="small"
                         />
                       </Tooltip>,
                       <Tooltip title="Remove">
@@ -82,6 +90,7 @@ export default function ImageGallery({ images, onRemove, onPreview, mode }: Imag
                           danger
                           icon={<DeleteOutlined />}
                           onClick={() => onRemove(image.id)}
+                          size="small"
                         />
                       </Tooltip>,
                     ]}
@@ -90,18 +99,18 @@ export default function ImageGallery({ images, onRemove, onPreview, mode }: Imag
                       <div className="text-xs">
                         <Space direction="vertical" size={0} className="w-full">
                           {image.ocrPreview.vendor && (
-                            <Text ellipsis className="font-semibold">
+                            <Text ellipsis className="font-semibold text-xs">
                               {image.ocrPreview.vendor}
                             </Text>
                           )}
                           {image.ocrPreview.amount && (
-                            <Text type="secondary">
+                            <Text type="secondary" className="text-xs">
                               ${image.ocrPreview.amount.toFixed(2)}
                             </Text>
                           )}
                           {image.ocrPreview.confidence && (
-                            <Text type="secondary" className="text-xs">
-                              {Math.round(image.ocrPreview.confidence * 100)}% confidence
+                            <Text type="secondary" style={{ fontSize: '10px' }}>
+                              {Math.round(image.ocrPreview.confidence * 100)}% conf.
                             </Text>
                           )}
                         </Space>

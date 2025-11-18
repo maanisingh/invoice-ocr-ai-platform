@@ -18,7 +18,7 @@ const ICON_MAP = {
 
 export default function CaptureModeSelector({ mode, onChange, disabled }: CaptureModeSelectorProps) {
   return (
-    <Card className="mb-4" size="small">
+    <Card className="mb-3 sm:mb-4 shadow-sm" size="small">
       <Radio.Group
         value={mode}
         onChange={(e) => onChange(e.target.value)}
@@ -33,22 +33,23 @@ export default function CaptureModeSelector({ mode, onChange, disabled }: Captur
               <Radio.Button
                 key={config.mode}
                 value={config.mode}
-                className="w-full text-left h-auto py-3 px-4"
+                className="w-full text-left h-auto py-2 px-3 sm:py-3 sm:px-4"
                 style={{
                   borderColor: mode === config.mode ? config.color : undefined,
                   backgroundColor: mode === config.mode ? `${config.color}10` : undefined,
                 }}
               >
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-2 sm:gap-3">
                   <IconComponent
                     style={{
-                      fontSize: 24,
+                      fontSize: 20,
                       color: mode === config.mode ? config.color : '#8c8c8c',
                     }}
+                    className="sm:text-2xl mt-0.5"
                   />
                   <div className="flex-1">
-                    <div className="font-semibold text-base">{config.label}</div>
-                    <Text type="secondary" className="text-sm">
+                    <div className="font-semibold text-sm sm:text-base">{config.label}</div>
+                    <Text type="secondary" className="text-xs sm:text-sm">
                       {config.description}
                     </Text>
                   </div>
