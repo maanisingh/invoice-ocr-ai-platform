@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://disciplined-youth-production.up.railway.app';
-const OUTPUT_DIR = './public/videos';
+const OUTPUT_DIR = './frontend/public/videos';
 
 // Create output directory
 if (!fs.existsSync(OUTPUT_DIR)) {
