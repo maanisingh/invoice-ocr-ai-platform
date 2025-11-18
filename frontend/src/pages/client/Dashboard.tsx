@@ -71,7 +71,7 @@ export default function ClientDashboard() {
       {/* Mobile View */}
       <div className="lg:hidden min-h-screen bg-gray-50">
         {/* Hero Stats - Mobile */}
-        <div className="bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 px-4 pt-6 pb-8">
+        <div className="bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 pt-6 pb-8">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,7 +107,7 @@ export default function ClientDashboard() {
         </div>
 
         {/* Quick Actions - Floating */}
-        <div className="px-4 -mt-4 mb-4">
+        <div className="-mt-4 mb-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -127,7 +127,7 @@ export default function ClientDashboard() {
         </div>
 
         {/* Mini Insights - Mobile */}
-        <div className="px-4 mb-4">
+        <div className="mb-4">
           <div className="grid grid-cols-2 gap-3">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -158,7 +158,7 @@ export default function ClientDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="px-4 mb-4">
+        <div className="mb-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-base font-bold text-gray-900">Recent Activity</h3>
             <Button
@@ -218,11 +218,8 @@ export default function ClientDashboard() {
       {/* Desktop View */}
       <div className="hidden lg:block space-y-6">
         {/* Desktop Header with Action */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-500 mt-1">Welcome back! Here's your overview</p>
-          </div>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
           <Button
             type="primary"
             size="large"

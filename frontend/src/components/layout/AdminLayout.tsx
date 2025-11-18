@@ -296,8 +296,8 @@ export default function AdminLayout() {
         <Content
           style={{
             margin: 0,
-            padding: '24px',
-            minHeight: 'calc(100vh - 64px)',
+            padding: isDesktop ? '32px 24px 32px 240px' : '0 0 100px 0',
+            minHeight: isDesktop ? 'calc(100vh - 64px)' : '100vh',
             background: '#f8fafc',
             overflowX: 'hidden',
           }}

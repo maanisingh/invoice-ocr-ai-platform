@@ -144,7 +144,7 @@ export default function ClientInvoicesPage() {
         </div>
 
         {/* Mobile Invoice Cards */}
-        <div className="px-4 pt-2 space-y-3">
+        <div className="pt-2 space-y-3">
           <AnimatePresence>
             {filteredInvoices.length === 0 ? (
               <Empty description="No invoices found" className="mt-8" />
@@ -213,7 +213,10 @@ export default function ClientInvoicesPage() {
       </div>
 
       {/* Desktop View */}
-      <div className="hidden lg:block space-y-6 p-8">
+      <div className="hidden lg:block space-y-6">
+        {/* Page Title */}
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">Invoices</h1>
+
         {/* Desktop Stats */}
         <Row gutter={24}>
           <Col span={6}>
@@ -285,7 +288,6 @@ export default function ClientInvoicesPage() {
 
         {/* Desktop Invoice Table */}
         <div className={cn(modernCard, "bg-white p-6", hoverGlow)}>
-          <div className="text-2xl font-black text-gray-900 mb-6">All Invoices</div>
           <Table
             columns={columns}
             dataSource={filteredInvoices}

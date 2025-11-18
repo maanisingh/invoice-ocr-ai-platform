@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
-import { Layout, Menu, Avatar, Dropdown, Button, Space, Badge, Tooltip } from 'antd'
+import { Layout, Menu, Avatar, Dropdown, Button, Space, Badge } from 'antd'
 import {
   DashboardOutlined,
   FileTextOutlined,
@@ -17,8 +17,6 @@ import {
   ShoppingCartOutlined,
   AppstoreAddOutlined,
   UploadOutlined,
-  DesktopOutlined,
-  MobileOutlined,
 } from '@ant-design/icons'
 import { useAuthStore } from '@/store/authStore'
 import { useThemeStore } from '@/store/themeStore'
@@ -29,7 +27,6 @@ const { Header, Sider, Content } = Layout
 
 export default function ClientLayout() {
   const [collapsed, setCollapsed] = useState(false)
-  const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop')
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
   const location = useLocation()
   const navigate = useNavigate()
@@ -158,16 +155,16 @@ export default function ClientLayout() {
   ]
 
   return (
-    <div className={viewMode === 'mobile' ? 'mobile-simulator' : ''}>
-      <Layout className="min-h-screen">
+    <Layout className="min-h-screen">
         <Sider
           trigger={null}
           collapsible
           collapsed={collapsed}
           breakpoint="lg"
           onBreakpoint={(broken) => setCollapsed(broken)}
-          className="enterprise-sidebar hidden lg:block"
+          className="enterprise-sidebar"
           style={{
+            display: isDesktop ? 'block' : 'none',
             overflow: 'hidden',
             height: '100vh',
             position: 'fixed',
@@ -224,11 +221,11 @@ export default function ClientLayout() {
       >
         {/* Desktop Header - Only shown on desktop */}
         <Header
-          className="enterprise-header sm:pr-6 hidden lg:flex"
+          className="enterprise-header"
           style={{
+            display: isDesktop ? 'flex' : 'none',
             padding: 0,
             background: isDarkMode ? '#141414' : '#fff',
-            display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingRight: 12,
@@ -249,14 +246,6 @@ export default function ClientLayout() {
             }}
           />
           <Space size="large">
-            <Tooltip title={`Switch to ${viewMode === 'desktop' ? 'Mobile' : 'Desktop'} View`}>
-              <Button
-                type="text"
-                icon={viewMode === 'desktop' ? <MobileOutlined /> : <DesktopOutlined />}
-                onClick={() => setViewMode(viewMode === 'desktop' ? 'mobile' : 'desktop')}
-                style={{ fontSize: '18px' }}
-              />
-            </Tooltip>
             <div className="demo-mode-toggle">
               <DemoModeToggle />
             </div>
@@ -280,19 +269,20 @@ export default function ClientLayout() {
         <Content
           style={{
             margin: 0,
-            padding: 0,
-            minHeight: '100vh',
+            padding: isDesktop ? '28px 0 115px 227px' : '0 0 100px 0',
+            minHeight: isDesktop ? 'calc(100vh - 64px)' : '100vh',
             background: '#f8fafc',
             overflowX: 'hidden',
-            paddingBottom: '80px',
           }}
-          className="lg:p-6 lg:pb-6 lg:min-h-[calc(100vh-64px)]"
+          className=""
         >
           <Outlet />
         </Content>
 
         {/* Mobile Bottom Navigation - Modern iOS/Android Style */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 via-gray-800 to-gray-900 z-50">
+        <div
+          className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 via-gray-800 to-gray-900 z-50"
+          style={{ display: isDesktop ? 'none' : 'block' }}>
           {/* Safe area for notch/home indicator */}
           <div className="h-1 bg-gradient-to-b from-transparent to-black/20"></div>
 
@@ -367,79 +357,5 @@ export default function ClientLayout() {
         </div>
       </Layout>
     </Layout>
-
-    {/* Mobile Simulator CSS */}
-    <style>{`
-      .mobile-simulator {
-        max-width: 375px;
-        margin: 0 auto;
-        box-shadow: 0 0 0 8px #1f2937, 0 0 0 10px #374151, 0 20px 60px rgba(0,0,0,0.5);
-        border-radius: 36px;
-        overflow: hidden;
-        position: relative;
-        background: #1f2937;
-      }
-
-      .mobile-simulator::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 120px;
-        height: 28px;
-        background: #1f2937;
-        border-radius: 0 0 20px 20px;
-        z-index: 9999;
-      }
-
-      .mobile-simulator::after {
-        content: '';
-        position: absolute;
-        top: 8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60px;
-        height: 6px;
-        background: #4b5563;
-        border-radius: 3px;
-        z-index: 10000;
-      }
-
-      .mobile-simulator .ant-layout {
-        border-radius: 24px;
-        overflow: hidden;
-      }
-
-      /* Force mobile breakpoint */
-      .mobile-simulator .lg\\:hidden {
-        display: block !important;
-      }
-
-      .mobile-simulator .hidden.lg\\:block {
-        display: none !important;
-      }
-
-      .mobile-simulator .lg\\:flex {
-        display: none !important;
-      }
-
-      .mobile-simulator .ml-0.lg\\:ml-\\[240px\\] {
-        margin-left: 0 !important;
-      }
-
-      .mobile-simulator .lg\\:p-6 {
-        padding: 0 !important;
-      }
-
-      .mobile-simulator .lg\\:pb-6 {
-        padding-bottom: 0 !important;
-      }
-
-      .mobile-simulator .lg\\:min-h-\\[calc\\(100vh-64px\\)\\] {
-        min-height: 100vh !important;
-      }
-    `}</style>
-  </div>
   )
 }

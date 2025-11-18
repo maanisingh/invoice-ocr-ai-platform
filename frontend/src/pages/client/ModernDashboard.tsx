@@ -144,7 +144,7 @@ export default function ModernClientDashboard() {
         </div>
 
         {/* Floating Action Button - Mobile */}
-        <div className="px-4 -mt-8 mb-6 relative z-20">
+        <div className="-mt-8 mb-6 relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -169,7 +169,7 @@ export default function ModernClientDashboard() {
         </div>
 
         {/* Mini Insights - Mobile */}
-        <div className="px-4 mb-6">
+        <div className="mb-6">
           <div className="grid grid-cols-2 gap-4">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -202,7 +202,7 @@ export default function ModernClientDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="px-4 mb-6">
+        <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-black text-gray-900">Recent Activity</h3>
             <Button
@@ -269,12 +269,8 @@ export default function ModernClientDashboard() {
           ref={headerRef}
           initial={{ opacity: 0, y: -20 }}
           animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          className="flex items-center justify-between"
+          className="flex items-center justify-end mb-6"
         >
-          <div>
-            <h1 className="text-5xl font-black text-gray-900 mb-2">Dashboard</h1>
-            <p className="text-gray-500 text-lg font-medium">Welcome back! Here's your overview</p>
-          </div>
           <Button
             type="primary"
             size="large"

@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  // Note: safelist removed - responsive utilities now outside @layer to prevent purging
   theme: {
     extend: {
       colors: {

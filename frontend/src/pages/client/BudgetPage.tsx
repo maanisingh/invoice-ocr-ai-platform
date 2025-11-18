@@ -228,7 +228,7 @@ export default function BudgetTrackingPage() {
         </div>
 
         {/* Mobile Budget Cards */}
-        <div className="px-4 py-4 space-y-3">
+        <div className="py-4 space-y-3">
           {budgets.map((budget, index) => {
             const percentage = (budget.spent / budget.allocated) * 100;
             const remaining = budget.allocated - budget.spent;
@@ -289,11 +289,7 @@ export default function BudgetTrackingPage() {
       {/* Desktop View */}
       <div className="hidden lg:block space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold">Budget Tracking</h1>
-            <p className="text-gray-500 mt-1">Monitor spending across categories and departments</p>
-          </div>
+        <div className="flex justify-end items-center mb-6">
           <Button type="primary" icon={<PlusOutlined />} size="large">
             Create Budget
           </Button>
