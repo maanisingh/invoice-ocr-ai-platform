@@ -264,6 +264,75 @@ export default function ClientLayout() {
             </Dropdown>
           </Space>
         </Header>
+
+        {/* Mobile Header */}
+        <Header
+          className="lg:hidden flex items-center justify-between px-4"
+          style={{
+            padding: '0 16px',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: 56,
+            position: 'sticky',
+            top: 0,
+            zIndex: 999,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+          }}
+        >
+          {/* No Logo - Just User Info */}
+          <Space>
+            <Avatar
+              src={user?.avatar}
+              icon={<UserOutlined />}
+              style={{
+                backgroundColor: '#fff',
+                color: '#667eea',
+              }}
+            />
+            <span className="text-white font-semibold text-sm">
+              {user?.firstName}
+            </span>
+          </Space>
+
+          {/* Right Side Actions */}
+          <Space size="middle">
+            <Tooltip title={viewMode === 'desktop' ? 'Switch to Mobile View' : 'Switch to Desktop View'}>
+              <Button
+                type="text"
+                icon={viewMode === 'desktop' ? <MobileOutlined /> : <DesktopOutlined />}
+                onClick={() => setViewMode(viewMode === 'desktop' ? 'mobile' : 'desktop')}
+                style={{
+                  fontSize: '18px',
+                  color: '#fff',
+                }}
+              />
+            </Tooltip>
+            <Badge count={5} size="small">
+              <Button
+                type="text"
+                icon={<BellOutlined />}
+                style={{
+                  fontSize: '18px',
+                  color: '#fff',
+                }}
+              />
+            </Badge>
+            <Tooltip title="Logout">
+              <Button
+                type="text"
+                icon={<LogoutOutlined />}
+                onClick={handleLogout}
+                style={{
+                  fontSize: '18px',
+                  color: '#fff',
+                }}
+              />
+            </Tooltip>
+          </Space>
+        </Header>
+
         <Content
           style={{
             margin: 0,
@@ -278,62 +347,75 @@ export default function ClientLayout() {
           <Outlet />
         </Content>
 
-        {/* Mobile Bottom Navigation - Clean & Beautiful */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg">
-          <div className="flex items-center justify-around h-16">
+        {/* Mobile Bottom Navigation - Modern iOS/Android Style */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 via-gray-800 to-gray-900 z-50">
+          {/* Safe area for notch/home indicator */}
+          <div className="h-1 bg-gradient-to-b from-transparent to-black/20"></div>
+
+          <div className="flex items-center justify-around px-2 py-2 relative">
             <Link
               to="/client/dashboard"
-              className={`flex flex-col items-center justify-center flex-1 h-full transition-all ${
+              className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-300 ${
                 location.pathname === '/client/dashboard'
-                  ? 'text-blue-600 bg-blue-50'
-                  : 'text-gray-500'
+                  ? 'text-blue-400 bg-blue-500/20 scale-105'
+                  : 'text-gray-400 hover:text-gray-200 active:scale-95'
               }`}
             >
-              <DashboardOutlined style={{ fontSize: 22 }} />
-              <span className="text-[10px] mt-1 font-medium">Home</span>
+              <DashboardOutlined style={{ fontSize: 24, marginBottom: 4 }} />
+              <span className="text-[9px] font-semibold tracking-wide">Home</span>
             </Link>
+
             <Link
               to="/client/invoices"
-              className={`flex flex-col items-center justify-center flex-1 h-full transition-all ${
+              className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-300 ${
                 location.pathname === '/client/invoices'
-                  ? 'text-blue-600 bg-blue-50'
-                  : 'text-gray-500'
+                  ? 'text-purple-400 bg-purple-500/20 scale-105'
+                  : 'text-gray-400 hover:text-gray-200 active:scale-95'
               }`}
             >
-              <FileTextOutlined style={{ fontSize: 22 }} />
-              <span className="text-[10px] mt-1 font-medium">Invoices</span>
+              <FileTextOutlined style={{ fontSize: 24, marginBottom: 4 }} />
+              <span className="text-[9px] font-semibold tracking-wide">Invoices</span>
             </Link>
+
+            {/* Center FAB Button */}
             <Link
               to="/client/upload/camera"
-              className="flex flex-col items-center justify-center flex-1 h-full"
+              className="flex flex-col items-center justify-center -mt-8 active:scale-95 transition-transform duration-200"
             >
-              <div className="w-14 h-14 -mt-6 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
-                <CameraOutlined style={{ fontSize: 26, color: 'white' }} />
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-500/50 border-4 border-gray-900 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0"></div>
+                <CameraOutlined style={{ fontSize: 28, color: 'white', position: 'relative', zIndex: 1 }} />
               </div>
+              <span className="text-[8px] font-bold text-gray-300 mt-1 tracking-wide">SCAN</span>
             </Link>
+
             <Link
               to="/client/budget"
-              className={`flex flex-col items-center justify-center flex-1 h-full transition-all ${
+              className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-300 ${
                 location.pathname === '/client/budget'
-                  ? 'text-blue-600 bg-blue-50'
-                  : 'text-gray-500'
+                  ? 'text-green-400 bg-green-500/20 scale-105'
+                  : 'text-gray-400 hover:text-gray-200 active:scale-95'
               }`}
             >
-              <BarChartOutlined style={{ fontSize: 22 }} />
-              <span className="text-[10px] mt-1 font-medium">Budget</span>
+              <BarChartOutlined style={{ fontSize: 24, marginBottom: 4 }} />
+              <span className="text-[9px] font-semibold tracking-wide">Budget</span>
             </Link>
+
             <Link
               to="/client/reports"
-              className={`flex flex-col items-center justify-center flex-1 h-full transition-all ${
+              className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-300 ${
                 location.pathname === '/client/reports'
-                  ? 'text-blue-600 bg-blue-50'
-                  : 'text-gray-500'
+                  ? 'text-pink-400 bg-pink-500/20 scale-105'
+                  : 'text-gray-400 hover:text-gray-200 active:scale-95'
               }`}
             >
-              <PieChartOutlined style={{ fontSize: 22 }} />
-              <span className="text-[10px] mt-1 font-medium">Reports</span>
+              <PieChartOutlined style={{ fontSize: 24, marginBottom: 4 }} />
+              <span className="text-[9px] font-semibold tracking-wide">Reports</span>
             </Link>
           </div>
+
+          {/* Bottom safe area for iOS home indicator */}
+          <div className="h-5 bg-gradient-to-t from-gray-900 to-transparent"></div>
         </div>
       </Layout>
     </Layout>

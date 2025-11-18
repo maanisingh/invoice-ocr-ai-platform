@@ -109,10 +109,10 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-x-hidden w-full m-0 p-0">
       {/* Top Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-white/10 w-full">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-4 flex justify-between items-center">
           <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
             Invoice OCR AI
           </div>
@@ -142,7 +142,7 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <motion.section
-        className="relative min-h-screen flex items-center justify-center px-4 py-20"
+        className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 py-20 w-full"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -240,7 +240,7 @@ const LandingPage = () => {
       </motion.section>
 
       {/* Features Section */}
-      <section ref={ref1} className="relative py-20 px-4">
+      <section ref={ref1} className="relative py-20 px-6 sm:px-8 w-full">
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-16"
@@ -280,7 +280,7 @@ const LandingPage = () => {
       </section>
 
       {/* How It Works */}
-      <section ref={ref2} className="relative py-20 px-4 bg-white/5">
+      <section ref={ref2} className="relative py-20 px-6 sm:px-8 bg-white/5 w-full">
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-16"
@@ -325,7 +325,7 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section ref={ref3} className="relative py-20 px-4">
+      <section ref={ref3} className="relative py-20 px-6 sm:px-8 w-full">
         <motion.div
           className="max-w-4xl mx-auto text-center p-12 bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-sm border border-purple-500/30 rounded-3xl"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -356,7 +356,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative py-12 px-4 border-t border-white/10">
+      <footer className="relative py-12 px-6 sm:px-8 border-t border-white/10 w-full">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-gray-400">
             © 2024 Invoice OCR AI Platform. All rights reserved.

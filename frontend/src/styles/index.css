@@ -2,15 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global Overflow Fix */
+/* Global Overflow Fix & Remove White Lines */
 html, body {
   overflow-x: hidden !important;
   max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
 }
 
 #root {
   overflow-x: hidden !important;
   max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* Remove any container margins/padding that cause white lines */
+* {
+  box-sizing: border-box;
+}
+
+.ant-layout {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Mobile Responsiveness Improvements */
