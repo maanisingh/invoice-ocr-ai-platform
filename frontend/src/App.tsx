@@ -44,6 +44,9 @@ import ClientAdvancedReportsPage from '@/pages/client/AdvancedReportsPage'
 import ClientIntegrationsPage from '@/pages/client/IntegrationsPage'
 import ClientUploadPage from '@/pages/client/UploadPage'
 
+// Marketing Pages
+import LandingPage from '@/pages/LandingPage'
+
 function App() {
   const { isDarkMode } = useThemeStore()
 
@@ -60,6 +63,9 @@ function App() {
     >
       <BrowserRouter>
         <Routes>
+          {/* Landing Page */}
+          <Route path="/" element={<LandingPage />} />
+
           {/* Public Routes */}
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<LoginPage />} />
@@ -108,9 +114,8 @@ function App() {
             </Route>
           </Route>
 
-          {/* Default Routes */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          {/* Default Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>
