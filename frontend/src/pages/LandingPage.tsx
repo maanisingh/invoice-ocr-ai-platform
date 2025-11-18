@@ -11,17 +11,15 @@ import {
   CheckCircle2,
   Sparkles,
   ArrowRight,
-  Play,
   Brain,
   Clock,
   DollarSign
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const [videoPlaying, setVideoPlaying] = useState(false);
   const [ref1, inView1] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [ref2, inView2] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [ref3, inView3] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -111,7 +109,7 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-x-hidden">
       {/* Top Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -207,11 +205,11 @@ const LandingPage = () => {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
-              onClick={() => setVideoPlaying(true)}
+              onClick={() => navigate('/login')}
               className="group px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full font-semibold text-lg hover:bg-white/20 transition-all duration-300 flex items-center gap-2"
             >
-              <Play className="w-5 h-5" />
-              Watch Demo
+              Try Live Demo
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </motion.div>
 
@@ -240,42 +238,6 @@ const LandingPage = () => {
           </motion.div>
         </div>
       </motion.section>
-
-      {/* Video Demo Section */}
-      {videoPlaying && (
-        <motion.div
-          className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={() => setVideoPlaying(false)}
-        >
-          <motion.div
-            className="max-w-5xl w-full"
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative pt-[56.25%] bg-black rounded-2xl overflow-hidden shadow-2xl">
-              <video
-                className="absolute top-0 left-0 w-full h-full object-cover"
-                src="/videos/demo-video.webm"
-                controls
-                autoPlay
-                loop
-                muted
-              >
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <button
-              onClick={() => setVideoPlaying(false)}
-              className="mt-4 w-full py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
-            >
-              Close
-            </button>
-          </motion.div>
-        </motion.div>
-      )}
 
       {/* Features Section */}
       <section ref={ref1} className="relative py-20 px-4">
@@ -400,9 +362,15 @@ const LandingPage = () => {
             © 2024 Invoice OCR AI Platform. All rights reserved.
           </p>
           <div className="mt-4 flex justify-center gap-6 text-gray-400">
-            <a href="#" className="hover:text-purple-400 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-purple-400 transition-colors">Terms</a>
-            <a href="#" className="hover:text-purple-400 transition-colors">Contact</a>
+            <button onClick={() => navigate('/privacy')} className="hover:text-purple-400 transition-colors">
+              Privacy
+            </button>
+            <button onClick={() => navigate('/terms')} className="hover:text-purple-400 transition-colors">
+              Terms
+            </button>
+            <button onClick={() => navigate('/contact')} className="hover:text-purple-400 transition-colors">
+              Contact
+            </button>
           </div>
         </div>
       </footer>

@@ -46,6 +46,9 @@ import ClientUploadPage from '@/pages/client/UploadPage'
 
 // Marketing Pages
 import LandingPage from '@/pages/LandingPage'
+import PrivacyPage from '@/pages/PrivacyPage'
+import TermsPage from '@/pages/TermsPage'
+import ContactPage from '@/pages/ContactPage'
 
 function App() {
   const { isDarkMode } = useThemeStore()
@@ -65,6 +68,11 @@ function App() {
         <Routes>
           {/* Landing Page */}
           <Route path="/" element={<LandingPage />} />
+
+          {/* Marketing Pages */}
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
           {/* Public Routes */}
           <Route element={<AuthLayout />}>

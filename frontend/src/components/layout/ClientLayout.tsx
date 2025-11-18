@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
-import { Layout, Menu, Avatar, Dropdown, Button, Space, Badge } from 'antd'
+import { Layout, Menu, Avatar, Dropdown, Button, Space, Badge, Tooltip } from 'antd'
 import {
   DashboardOutlined,
   FileTextOutlined,
@@ -18,6 +18,8 @@ import {
   PieChartOutlined,
   AppstoreAddOutlined,
   UploadOutlined,
+  DesktopOutlined,
+  MobileOutlined,
 } from '@ant-design/icons'
 import { useAuthStore } from '@/store/authStore'
 import { useThemeStore } from '@/store/themeStore'
@@ -28,6 +30,7 @@ const { Header, Sider, Content } = Layout
 
 export default function ClientLayout() {
   const [collapsed, setCollapsed] = useState(false)
+  const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop')
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
@@ -153,7 +156,7 @@ export default function ClientLayout() {
         collapsed={collapsed}
         breakpoint="lg"
         onBreakpoint={(broken) => setCollapsed(broken)}
-        className="enterprise-sidebar hidden lg:block"
+        className={`enterprise-sidebar ${viewMode === 'mobile' ? 'hidden' : 'hidden lg:block'}`}
         style={{
           overflow: 'hidden',
           height: '100vh',
@@ -208,7 +211,7 @@ export default function ClientLayout() {
       >
         {/* Desktop Header */}
         <Header
-          className="enterprise-header sm:pr-6 hidden lg:flex"
+          className={`enterprise-header sm:pr-6 ${viewMode === 'mobile' ? 'hidden' : 'hidden lg:flex'}`}
           style={{
             padding: 0,
             background: isDarkMode ? '#141414' : '#fff',
@@ -233,6 +236,14 @@ export default function ClientLayout() {
             }}
           />
           <Space size="large">
+            <Tooltip title={`Switch to ${viewMode === 'desktop' ? 'Mobile' : 'Desktop'} View`}>
+              <Button
+                type="text"
+                icon={viewMode === 'desktop' ? <MobileOutlined /> : <DesktopOutlined />}
+                onClick={() => setViewMode(viewMode === 'desktop' ? 'mobile' : 'desktop')}
+                style={{ fontSize: '18px' }}
+              />
+            </Tooltip>
             <div className="demo-mode-toggle">
               <DemoModeToggle />
             </div>
@@ -267,7 +278,7 @@ export default function ClientLayout() {
         </Content>
 
         {/* Mobile Bottom Navigation - Clean & Beautiful */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg">
+        <div className={`${viewMode === 'mobile' ? 'block' : 'lg:hidden'} fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg`}>
           <div className="flex items-center justify-around h-16">
             <Link
               to="/client/dashboard"

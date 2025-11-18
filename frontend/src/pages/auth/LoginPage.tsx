@@ -40,21 +40,21 @@ export default function LoginPage() {
       }}
     >
       {/* Header Section */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-6">
         <div
-          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
+          className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3"
           style={{
             background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
             boxShadow: '0 8px 24px rgba(59, 130, 246, 0.3)'
           }}
         >
-          <SafetyOutlined style={{ fontSize: '32px', color: 'white' }} />
+          <SafetyOutlined style={{ fontSize: '28px', color: 'white' }} />
         </div>
-        <Title level={2} className="heading-enterprise mb-2" style={{ fontSize: '28px', marginBottom: '8px' }}>
-          Invoice OCR Platform
+        <Title level={2} className="heading-enterprise mb-1" style={{ fontSize: '24px', marginBottom: '4px' }}>
+          Invoice OCR AI
         </Title>
-        <Text className="text-enterprise" style={{ fontSize: '15px' }}>
-          Sign in to access your intelligent invoice management system
+        <Text className="text-enterprise" style={{ fontSize: '14px' }}>
+          Sign in to your dashboard
         </Text>
       </div>
 
@@ -170,8 +170,8 @@ export default function LoginPage() {
       </Space>
 
       {/* Register Link */}
-      <div className="text-center mt-8 pt-6" style={{ borderTop: '1px solid #e2e8f0' }}>
-        <Text className="text-enterprise">
+      <div className="text-center mt-6 pt-4" style={{ borderTop: '1px solid #e2e8f0' }}>
+        <Text className="text-enterprise" style={{ fontSize: '13px' }}>
           Don't have an account?{' '}
           <Link
             to="/register"
@@ -180,14 +180,6 @@ export default function LoginPage() {
           >
             Create Account
           </Link>
-        </Text>
-      </div>
-
-      {/* Security Badge */}
-      <div className="text-center mt-4">
-        <Text type="secondary" style={{ fontSize: '12px' }}>
-          <SafetyOutlined style={{ marginRight: '4px' }} />
-          Enterprise-grade security & encryption
         </Text>
       </div>
     </Card>
