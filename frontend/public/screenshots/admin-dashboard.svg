@@ -1,0 +1,98 @@
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#bg-gradient)"/>
+
+  <!-- Sidebar -->
+  <rect width="240" height="1080" fill="#1e293b"/>
+  <text x="50" y="50" fill="#a855f7" font-size="24" font-weight="bold">Invoice OCR</text>
+  <text x="50" y="75" fill="#94a3b8" font-size="14">Admin Portal</text>
+
+  <!-- Menu Items -->
+  <rect x="20" y="120" width="200" height="40" fill="#a855f7" rx="8"/>
+  <text x="35" y="145" fill="white" font-size="14">📊 Dashboard</text>
+
+  <rect x="20" y="170" width="200" height="40" fill="#334155" rx="8"/>
+  <text x="35" y="195" fill="#94a3b8" font-size="14">📄 Invoices</text>
+
+  <rect x="20" y="220" width="200" height="40" fill="#334155" rx="8"/>
+  <text x="35" y="245" fill="#94a3b8" font-size="14">👥 Clients</text>
+
+  <!-- Header -->
+  <rect x="240" width="1680" height="80" fill="#1e293b"/>
+  <text x="280" y="50" fill="white" font-size="28" font-weight="bold">Admin Dashboard</text>
+
+  <!-- Stats Cards -->
+  <rect x="280" y="120" width="380" height="180" fill="#1e293b" rx="16"/>
+  <rect x="280" y="120" width="380" height="8" fill="url(#card-gradient)" rx="16"/>
+  <text x="300" y="160" fill="#94a3b8" font-size="14">Total Invoices</text>
+  <text x="300" y="200" fill="white" font-size="48" font-weight="bold">2,847</text>
+  <text x="300" y="230" fill="#10b981" font-size="14">↑ 12.5% from last month</text>
+
+  <rect x="680" y="120" width="380" height="180" fill="#1e293b" rx="16"/>
+  <rect x="680" y="120" width="380" height="8" fill="url(#card-gradient)" rx="16"/>
+  <text x="700" y="160" fill="#94a3b8" font-size="14">Processed Today</text>
+  <text x="700" y="200" fill="white" font-size="48" font-weight="bold">384</text>
+  <text x="700" y="230" fill="#10b981" font-size="14">↑ 8.2% from yesterday</text>
+
+  <rect x="1080" y="120" width="380" height="180" fill="#1e293b" rx="16"/>
+  <rect x="1080" y="120" width="380" height="8" fill="url(#card-gradient)" rx="16"/>
+  <text x="1100" y="160" fill="#94a3b8" font-size="14">Active Clients</text>
+  <text x="1100" y="200" fill="white" font-size="48" font-weight="bold">127</text>
+  <text x="1100" y="230" fill="#10b981" font-size="14">↑ 5 new this week</text>
+
+  <rect x="1480" y="120" width="380" height="180" fill="#1e293b" rx="16"/>
+  <rect x="1480" y="120" width="380" height="8" fill="url(#card-gradient)" rx="16"/>
+  <text x="1500" y="160" fill="#94a3b8" font-size="14">Accuracy Rate</text>
+  <text x="1500" y="200" fill="white" font-size="48" font-weight="bold">99.5%</text>
+  <text x="1500" y="230" fill="#10b981" font-size="14">↑ 0.3% improvement</text>
+
+  <!-- Chart -->
+  <rect x="280" y="330" width="1580" height="400" fill="#1e293b" rx="16"/>
+  <text x="300" y="365" fill="white" font-size="20" font-weight="bold">Invoice Processing Analytics</text>
+
+  <!-- Bar Chart -->
+  <rect x="340" y="550" width="60" height="120" fill="#a855f7" rx="4"/>
+  <rect x="440" y="500" width="60" height="170" fill="#a855f7" rx="4"/>
+  <rect x="540" y="480" width="60" height="190" fill="#a855f7" rx="4"/>
+  <rect x="640" y="530" width="60" height="140" fill="#a855f7" rx="4"/>
+  <rect x="740" y="450" width="60" height="220" fill="#ec4899" rx="4"/>
+  <rect x="840" y="520" width="60" height="150" fill="#a855f7" rx="4"/>
+
+  <text x="340" y="700" fill="#94a3b8" font-size="12">Mon</text>
+  <text x="440" y="700" fill="#94a3b8" font-size="12">Tue</text>
+  <text x="540" y="700" fill="#94a3b8" font-size="12">Wed</text>
+  <text x="640" y="700" fill="#94a3b8" font-size="12">Thu</text>
+  <text x="740" y="700" fill="#94a3b8" font-size="12">Fri</text>
+  <text x="840" y="700" fill="#94a3b8" font-size="12">Sat</text>
+
+  <!-- Recent Activity -->
+  <rect x="280" y="760" width="1580" height="280" fill="#1e293b" rx="16"/>
+  <text x="300" y="795" fill="white" font-size="20" font-weight="bold">Recent Activity</text>
+
+  <circle cx="320" cy="845" r="8" fill="#10b981"/>
+  <text x="345" y="850" fill="white" font-size="14">Invoice #INV-2847 processed successfully</text>
+  <text x="1700" y="850" fill="#94a3b8" font-size="12">2 min ago</text>
+
+  <circle cx="320" cy="895" r="8" fill="#3b82f6"/>
+  <text x="345" y="900" fill="white" font-size="14">New client registered: Acme Corporation</text>
+  <text x="1700" y="900" fill="#94a3b8" font-size="12">15 min ago</text>
+
+  <circle cx="320" cy="945" r="8" fill="#a855f7"/>
+  <text x="345" y="950" fill="white" font-size="14">Batch processing completed: 47 invoices</text>
+  <text x="1700" y="950" fill="#94a3b8" font-size="12">1 hour ago</text>
+
+  <circle cx="320" cy="995" r="8" fill="#10b981"/>
+  <text x="345" y="1000" fill="white" font-size="14">Invoice #INV-2846 processed successfully</text>
+  <text x="1700" y="1000" fill="#94a3b8" font-size="12">2 hours ago</text>
+</svg>
