@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { TypeAnimation } from 'react-type-animation';
-import ReactPlayer from 'react-player';
 import {
   Zap,
   Shield,
@@ -234,14 +233,16 @@ const LandingPage = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative pt-[56.25%] bg-black rounded-2xl overflow-hidden shadow-2xl">
-              <ReactPlayer
-                url="/videos/demo-video.webm"
-                playing
+              <video
+                className="absolute top-0 left-0 w-full h-full object-cover"
+                src="/videos/demo-video.webm"
                 controls
-                width="100%"
-                height="100%"
-                className="absolute top-0 left-0"
-              />
+                autoPlay
+                loop
+                muted
+              >
+                Your browser does not support the video tag.
+              </video>
             </div>
             <button
               onClick={() => setVideoPlaying(false)}
