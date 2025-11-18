@@ -11,11 +11,15 @@ import {
   BellOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  BulbOutlined,
   ApiOutlined,
+  DollarOutlined,
+  ThunderboltOutlined,
+  ShoppingCartOutlined,
 } from '@ant-design/icons'
 import { useAuthStore } from '@/store/authStore'
 import { useThemeStore } from '@/store/themeStore'
+import DemoModeToggle from '@/components/DemoModeToggle'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const { Header, Sider, Content } = Layout
 
@@ -24,7 +28,7 @@ export default function ClientLayout() {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
-  const { isDarkMode, toggleTheme } = useThemeStore()
+  const { isDarkMode } = useThemeStore()
 
   const handleLogout = () => {
     logout()
@@ -58,27 +62,17 @@ export default function ClientLayout() {
         {
           key: '/client/dashboard',
           icon: <DashboardOutlined />,
-          label: (
-            <div className="menu-item-content">
-              <Link to="/client/dashboard">Dashboard</Link>
-              <Badge count={3} className="menu-badge" />
-            </div>
-          ),
+          label: <Link to="/client/dashboard">Dashboard</Link>,
         },
         {
           key: '/client/invoices',
           icon: <FileTextOutlined />,
-          label: (
-            <div className="menu-item-content">
-              <Link to="/client/invoices">My Invoices</Link>
-              <Badge count={8} className="menu-badge" />
-            </div>
-          ),
+          label: <Link to="/client/invoices">My Invoices</Link>,
         },
         {
           key: '/client/upload/camera',
           icon: <CameraOutlined />,
-          label: <Link to="/client/upload/camera">Camera Upload</Link>,
+          label: <Link to="/client/upload/camera">Upload Invoice</Link>,
         },
       ],
     },
@@ -87,9 +81,30 @@ export default function ClientLayout() {
       label: !collapsed && <span className="sidebar-section-header">ANALYTICS</span>,
       children: [
         {
-          key: '/client/reports',
+          key: '/client/advanced-reports',
           icon: <BarChartOutlined />,
-          label: <Link to="/client/reports">Reports</Link>,
+          label: <Link to="/client/advanced-reports">Advanced Reports</Link>,
+        },
+      ],
+    },
+    {
+      type: 'group' as const,
+      label: !collapsed && <span className="sidebar-section-header">FINANCIAL</span>,
+      children: [
+        {
+          key: '/client/budget',
+          icon: <DollarOutlined />,
+          label: <Link to="/client/budget">Budget Management</Link>,
+        },
+        {
+          key: '/client/subscriptions',
+          icon: <ThunderboltOutlined />,
+          label: <Link to="/client/subscriptions">Subscriptions</Link>,
+        },
+        {
+          key: '/client/purchases',
+          icon: <ShoppingCartOutlined />,
+          label: <Link to="/client/purchases">Purchases</Link>,
         },
       ],
     },
@@ -133,57 +148,46 @@ export default function ClientLayout() {
           left: 0,
           top: 0,
           bottom: 0,
-          display: 'flex',
-          flexDirection: 'column',
         }}
       >
-        {/* Logo Section */}
-        <div className="sidebar-logo" style={{ flexShrink: 0 }}>
-          <div className="logo-icon-wrapper">
-            <FileTextOutlined className="logo-icon" />
+        <div style={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+          {/* Logo Section */}
+          <div className="sidebar-logo" style={{ flexShrink: 0, height: '80px' }}>
+            <div className="logo-icon-wrapper">
+              <FileTextOutlined className="logo-icon" />
+            </div>
+            {!collapsed && (
+              <div className="logo-text">
+                <div className="logo-title">Invoice OCR</div>
+                <div className="logo-subtitle">Client Portal</div>
+              </div>
+            )}
           </div>
-          {!collapsed && (
-            <div className="logo-text">
-              <div className="logo-title">Invoice OCR</div>
-              <div className="logo-subtitle">Enterprise Edition</div>
-            </div>
-          )}
-        </div>
 
-        {/* Scrollable Menu Container */}
-        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
-          <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={[location.pathname]}
-            items={menuItems}
-            className="enterprise-menu"
-          />
-        </div>
-
-        {/* Bottom User Card */}
-        {!collapsed && (
-          <div className="sidebar-user-card" style={{ flexShrink: 0 }}>
-            <div className="user-card-content">
-              <Avatar size={40} src={user?.avatar} icon={<UserOutlined />} className="user-avatar" />
-              <div className="user-info">
-                <div className="user-name">
-                  {user?.firstName} {user?.lastName}
-                </div>
-                <div className="user-role">Client Portal</div>
-              </div>
-            </div>
-            <div className="user-card-stats">
-              <div className="stat-item">
-                <span className="stat-label">Storage</span>
-                <span className="stat-value">2.4 GB / 5 GB</span>
-              </div>
-              <div className="storage-bar">
-                <div className="storage-bar-fill" style={{ width: '48%' }}></div>
-              </div>
-            </div>
+          {/* Scrollable Menu Container */}
+          <div style={{
+            flex: '1 1 auto',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            minHeight: 0,
+          }}>
+            <Menu
+              theme="dark"
+              mode="inline"
+              selectedKeys={[location.pathname]}
+              items={menuItems}
+              className="enterprise-menu"
+              style={{
+                borderRight: 0,
+                height: '100%',
+              }}
+            />
           </div>
-        )}
+        </div>
       </Sider>
 
       <Layout style={{ marginLeft: collapsed ? 80 : 240 }}>
@@ -213,13 +217,13 @@ export default function ClientLayout() {
             }}
           />
           <Space size="large">
-            <Button
-              type="text"
-              icon={<BulbOutlined />}
-              onClick={toggleTheme}
-              title={isDarkMode ? 'Light Mode' : 'Dark Mode'}
-            />
-            <Badge count={3}>
+            <div className="demo-mode-toggle">
+              <DemoModeToggle />
+            </div>
+            <div className="theme-toggle">
+              <ThemeToggle />
+            </div>
+            <Badge count={5}>
               <Button type="text" icon={<BellOutlined />} />
             </Badge>
             <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">

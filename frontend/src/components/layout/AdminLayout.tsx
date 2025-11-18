@@ -14,11 +14,19 @@ import {
   BellOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  CameraOutlined,
-  BulbOutlined,
+  MobileOutlined,
+  WarningOutlined,
+  SafetyOutlined,
+  DollarOutlined,
+  StarOutlined,
+  AuditOutlined,
+  MailOutlined,
+  RobotOutlined,
 } from '@ant-design/icons'
 import { useAuthStore } from '@/store/authStore'
 import { useThemeStore } from '@/store/themeStore'
+import DemoModeToggle from '@/components/DemoModeToggle'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const { Header, Sider, Content } = Layout
 
@@ -27,7 +35,7 @@ export default function AdminLayout() {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
-  const { isDarkMode, toggleTheme } = useThemeStore()
+  const { isDarkMode } = useThemeStore()
 
   const handleLogout = () => {
     logout()
@@ -61,32 +69,38 @@ export default function AdminLayout() {
   const menuItems = [
     {
       type: 'group' as const,
-      label: !collapsed && <span className="sidebar-section-header">MAIN</span>,
+      label: !collapsed && <span className="sidebar-section-header">OVERVIEW</span>,
       children: [
         {
           key: '/admin/dashboard',
           icon: <DashboardOutlined />,
-          label: (
-            <div className="menu-item-content">
-              <Link to="/admin/dashboard">Dashboard</Link>
-              <Badge count={5} className="menu-badge" />
-            </div>
-          ),
+          label: <Link to="/admin/dashboard">Dashboard</Link>,
         },
+      ],
+    },
+    {
+      type: 'group' as const,
+      label: !collapsed && <span className="sidebar-section-header">INVOICES</span>,
+      children: [
         {
           key: '/admin/invoices',
           icon: <FileTextOutlined />,
-          label: (
-            <div className="menu-item-content">
-              <Link to="/admin/invoices">Invoices</Link>
-              <Badge count={23} className="menu-badge" />
-            </div>
-          ),
+          label: <Link to="/admin/invoices">All Invoices</Link>,
         },
         {
-          key: '/admin/invoices/camera',
-          icon: <CameraOutlined />,
-          label: <Link to="/admin/invoices/camera">Camera Upload</Link>,
+          key: '/admin/mobile-capture',
+          icon: <MobileOutlined />,
+          label: <Link to="/admin/mobile-capture">Upload Invoice</Link>,
+        },
+        {
+          key: '/admin/email-import',
+          icon: <MailOutlined />,
+          label: <Link to="/admin/email-import">Email Import</Link>,
+        },
+        {
+          key: '/admin/duplicates',
+          icon: <WarningOutlined />,
+          label: <Link to="/admin/duplicates">Duplicates</Link>,
         },
       ],
     },
@@ -97,12 +111,7 @@ export default function AdminLayout() {
         {
           key: '/admin/clients',
           icon: <TeamOutlined />,
-          label: (
-            <div className="menu-item-content">
-              <Link to="/admin/clients">Clients</Link>
-              <Badge count={42} className="menu-badge" />
-            </div>
-          ),
+          label: <Link to="/admin/clients">Clients</Link>,
         },
         {
           key: '/admin/categories',
@@ -116,16 +125,47 @@ export default function AdminLayout() {
       label: !collapsed && <span className="sidebar-section-header">ANALYTICS</span>,
       children: [
         {
-          key: '/admin/reports',
+          key: '/admin/advanced-reports',
           icon: <BarChartOutlined />,
-          label: <Link to="/admin/reports">Reports</Link>,
+          label: <Link to="/admin/advanced-reports">Advanced Reports</Link>,
+        },
+        {
+          key: '/admin/budget-tracking',
+          icon: <DollarOutlined />,
+          label: <Link to="/admin/budget-tracking">Budget Tracking</Link>,
+        },
+        {
+          key: '/admin/vendor-performance',
+          icon: <StarOutlined />,
+          label: <Link to="/admin/vendor-performance">Vendor Performance</Link>,
         },
       ],
     },
     {
       type: 'group' as const,
-      label: !collapsed && <span className="sidebar-section-header">SYSTEM</span>,
+      label: !collapsed && <span className="sidebar-section-header">SECURITY & COMPLIANCE</span>,
       children: [
+        {
+          key: '/admin/fraud-detection',
+          icon: <SafetyOutlined />,
+          label: <Link to="/admin/fraud-detection">Fraud Detection</Link>,
+        },
+        {
+          key: '/admin/audit-trail',
+          icon: <AuditOutlined />,
+          label: <Link to="/admin/audit-trail">Audit Trail</Link>,
+        },
+      ],
+    },
+    {
+      type: 'group' as const,
+      label: !collapsed && <span className="sidebar-section-header">SETTINGS</span>,
+      children: [
+        {
+          key: '/admin/ai-integration',
+          icon: <RobotOutlined />,
+          label: <Link to="/admin/ai-integration">AI Integration</Link>,
+        },
         {
           key: '/admin/integrations',
           icon: <ApiOutlined />,
@@ -134,7 +174,7 @@ export default function AdminLayout() {
         {
           key: '/admin/settings',
           icon: <SettingOutlined />,
-          label: <Link to="/admin/settings">Settings</Link>,
+          label: <Link to="/admin/settings">Configuration</Link>,
         },
       ],
     },
@@ -156,58 +196,46 @@ export default function AdminLayout() {
           left: 0,
           top: 0,
           bottom: 0,
-          display: 'flex',
-          flexDirection: 'column',
         }}
       >
-        {/* Logo Section */}
-        <div className="sidebar-logo" style={{ flexShrink: 0 }}>
-          <div className="logo-icon-wrapper">
-            <FileTextOutlined className="logo-icon" />
+        <div style={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+          {/* Logo Section */}
+          <div className="sidebar-logo" style={{ flexShrink: 0, height: '80px' }}>
+            <div className="logo-icon-wrapper">
+              <FileTextOutlined className="logo-icon" />
+            </div>
+            {!collapsed && (
+              <div className="logo-text">
+                <div className="logo-title">Invoice OCR</div>
+                <div className="logo-subtitle">Admin Portal</div>
+              </div>
+            )}
           </div>
-          {!collapsed && (
-            <div className="logo-text">
-              <div className="logo-title">Invoice OCR</div>
-              <div className="logo-subtitle">Admin Portal</div>
-            </div>
-          )}
-        </div>
 
-        {/* Scrollable Menu Container */}
-        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
-          <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={[location.pathname]}
-            items={menuItems}
-            className="enterprise-menu"
-          />
-        </div>
-
-        {/* Bottom User Card */}
-        {!collapsed && (
-          <div className="sidebar-user-card" style={{ flexShrink: 0 }}>
-            <div className="user-card-content">
-              <Avatar size={40} src={user?.avatar} icon={<UserOutlined />} className="user-avatar" />
-              <div className="user-info">
-                <div className="user-name">
-                  {user?.firstName} {user?.lastName}
-                </div>
-                <div className="user-role">Administrator</div>
-              </div>
-            </div>
-            <div className="user-card-stats">
-              <div className="stat-item">
-                <span className="stat-label">System Status</span>
-                <span className="stat-value">✓ Operational</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">Active Users</span>
-                <span className="stat-value">42 online</span>
-              </div>
-            </div>
+          {/* Scrollable Menu Container */}
+          <div style={{
+            flex: '1 1 auto',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            minHeight: 0,
+          }}>
+            <Menu
+              theme="dark"
+              mode="inline"
+              selectedKeys={[location.pathname]}
+              items={menuItems}
+              className="enterprise-menu"
+              style={{
+                borderRight: 0,
+                height: '100%',
+              }}
+            />
           </div>
-        )}
+        </div>
       </Sider>
 
       <Layout style={{ marginLeft: collapsed ? 80 : 240 }}>
@@ -237,12 +265,12 @@ export default function AdminLayout() {
             }}
           />
           <Space size="large">
-            <Button
-              type="text"
-              icon={<BulbOutlined />}
-              onClick={toggleTheme}
-              title={isDarkMode ? 'Light Mode' : 'Dark Mode'}
-            />
+            <div className="demo-mode-toggle">
+              <DemoModeToggle />
+            </div>
+            <div className="theme-toggle">
+              <ThemeToggle />
+            </div>
             <Badge count={5}>
               <Button type="text" icon={<BellOutlined />} />
             </Badge>
