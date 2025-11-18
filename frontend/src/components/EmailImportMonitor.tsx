@@ -174,10 +174,6 @@ export default function EmailImportMonitor() {
   // Demo email address for forwarding
   const demoEmailAddress = 'invoices@demo.alexandratechlab.com';
 
-  if (!isDemoMode) {
-    return null;
-  }
-
   return (
     <div>
       {/* Header */}
@@ -315,17 +311,26 @@ export default function EmailImportMonitor() {
           }
           className="shadow-lg rounded-xl"
         >
-          <Table
-            columns={columns}
-            dataSource={emailData.imports}
-            rowKey="id"
-            pagination={{
-              pageSize: 15,
-              showSizeChanger: true,
-              showTotal: (total) => `Total ${total} emails`,
-            }}
-            scroll={{ x: 1400 }}
-          />
+          {!isDemoMode && emailData.imports.length === 0 ? (
+            <Alert
+              message="Enable Demo Mode"
+              description="Enable demo mode in the top right to see sample email import data. In production, this will show emails processed from your configured inbox."
+              type="info"
+              showIcon
+            />
+          ) : (
+            <Table
+              columns={columns}
+              dataSource={emailData.imports}
+              rowKey="id"
+              pagination={{
+                pageSize: 15,
+                showSizeChanger: true,
+                showTotal: (total) => `Total ${total} emails`,
+              }}
+              scroll={{ x: 1400 }}
+            />
+          )}
         </Card>
       </motion.div>
     </div>

@@ -20,6 +20,10 @@ export default {
           900: '#001d66',
         },
       },
+      spacing: {
+        '20': '5rem',    // 80px
+        '60': '15rem',   // 240px
+      },
     },
   },
   plugins: [],

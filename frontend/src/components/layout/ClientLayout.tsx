@@ -207,7 +207,7 @@ export default function ClientLayout() {
       </Sider>
 
       <Layout
-        className={`transition-all duration-200 ${collapsed ? 'lg:ml-[80px]' : 'lg:ml-[240px]'}`}
+        className={`transition-all duration-200 ${collapsed ? 'lg:ml-20' : 'lg:ml-60'}`}
       >
         {/* Desktop Header - Only shown on desktop */}
         <Header

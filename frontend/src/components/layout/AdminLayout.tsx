@@ -233,7 +233,7 @@ export default function AdminLayout() {
       </Sider>
 
       <Layout
-        className={`transition-all duration-200 ${collapsed ? 'lg:ml-[80px]' : 'lg:ml-[240px]'}`}
+        className={`transition-all duration-200 ${collapsed ? 'lg:ml-20' : 'lg:ml-60'}`}
       >
         <Header
           className="enterprise-header"
