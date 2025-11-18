@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import { Layout, Menu, Avatar, Dropdown, Button, Space, Badge, Tooltip } from 'antd'
 import {
@@ -30,10 +30,20 @@ const { Header, Sider, Content } = Layout
 export default function ClientLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop')
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
   const { isDarkMode } = useThemeStore()
+
+  // Handle responsive sidebar margin
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const handleLogout = () => {
     logout()
@@ -207,7 +217,10 @@ export default function ClientLayout() {
       </Sider>
 
       <Layout
-        className={`transition-all duration-200 ${collapsed ? 'lg:ml-20' : 'lg:ml-60'}`}
+        style={{
+          marginLeft: isDesktop ? (collapsed ? 80 : 240) : 0,
+        }}
+        className="transition-all duration-200"
       >
         {/* Desktop Header - Only shown on desktop */}
         <Header
