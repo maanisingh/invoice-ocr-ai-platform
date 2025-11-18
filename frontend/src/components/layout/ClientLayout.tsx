@@ -15,7 +15,6 @@ import {
   DollarOutlined,
   ThunderboltOutlined,
   ShoppingCartOutlined,
-  PieChartOutlined,
   AppstoreAddOutlined,
   UploadOutlined,
   DesktopOutlined,
@@ -210,12 +209,11 @@ export default function ClientLayout() {
       <Layout
         style={{
           marginLeft: 0,
+          transition: 'margin-left 0.2s',
         }}
-        className={`transition-all duration-200 ${
-          collapsed ? 'lg:ml-[80px]' : 'lg:ml-[240px]'
-        }`}
+        className={collapsed ? 'lg:ml-[80px]' : 'lg:ml-[240px]'}
       >
-        {/* Desktop Header */}
+        {/* Desktop Header - Only shown on desktop */}
         <Header
           className="enterprise-header sm:pr-6 hidden lg:flex"
           style={{
@@ -270,80 +268,6 @@ export default function ClientLayout() {
           </Space>
         </Header>
 
-
-        {/* Mobile Top Bar - User Info & Actions */}
-        <div className="lg:hidden fixed top-0 left-0 right-0 bg-gradient-to-r from-purple-600 to-indigo-600 z-50 shadow-lg">
-          <div className="flex items-center justify-between px-4 py-3">
-            {/* Left: User Avatar & Name - Clickable to Settings */}
-            <div
-              onClick={() => navigate('/client/profile')}
-              className="flex items-center gap-3 cursor-pointer active:scale-95 transition-transform"
-            >
-              <Avatar
-                src={user?.avatar}
-                icon={<UserOutlined />}
-                size={40}
-                style={{
-                  backgroundColor: '#fff',
-                  color: '#667eea',
-                  border: '2px solid rgba(255,255,255,0.3)',
-                }}
-              />
-              <div className="flex flex-col">
-                <span className="text-white font-semibold text-sm leading-tight">
-                  {user?.firstName} {user?.lastName}
-                </span>
-                <span className="text-white/70 text-xs">Tap to view profile</span>
-              </div>
-            </div>
-
-            {/* Right: Action Buttons */}
-            <Space size="small">
-              <Tooltip title={viewMode === 'desktop' ? 'Mobile View' : 'Desktop View'}>
-                <Button
-                  type="text"
-                  icon={viewMode === 'desktop' ? <MobileOutlined /> : <DesktopOutlined />}
-                  onClick={() => setViewMode(viewMode === 'desktop' ? 'mobile' : 'desktop')}
-                  style={{
-                    fontSize: '20px',
-                    color: '#fff',
-                    width: 40,
-                    height: 40,
-                  }}
-                  className="flex items-center justify-center"
-                />
-              </Tooltip>
-              <Badge count={5} size="small">
-                <Button
-                  type="text"
-                  icon={<BellOutlined />}
-                  style={{
-                    fontSize: '20px',
-                    color: '#fff',
-                    width: 40,
-                    height: 40,
-                  }}
-                  className="flex items-center justify-center"
-                />
-              </Badge>
-              <Tooltip title="Logout">
-                <Button
-                  type="text"
-                  icon={<LogoutOutlined />}
-                  onClick={handleLogout}
-                  style={{
-                    fontSize: '20px',
-                    color: '#fff',
-                    width: 40,
-                    height: 40,
-                  }}
-                  className="flex items-center justify-center"
-                />
-              </Tooltip>
-            </Space>
-          </div>
-        </div>
-
         <Content
           style={{
             margin: 0,
@@ -353,7 +277,7 @@ export default function ClientLayout() {
             overflowX: 'hidden',
             paddingBottom: '80px',
           }}
-          className="lg:p-6 lg:pb-6 lg:min-h-[calc(100vh-64px)] pt-16 lg:pt-0"
+          className="lg:p-6 lg:pb-6 lg:min-h-[calc(100vh-64px)]"
         >
           <Outlet />
         </Content>
@@ -363,28 +287,33 @@ export default function ClientLayout() {
           {/* Safe area for notch/home indicator */}
           <div className="h-1 bg-gradient-to-b from-transparent to-black/20"></div>
 
-          <div className="flex items-center justify-around px-2 py-2 relative">
-            <Link
-              to="/client/dashboard"
-              className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-300 ${
-                location.pathname === '/client/dashboard'
-                  ? 'text-blue-400 bg-blue-500/20 scale-105'
-                  : 'text-gray-400 hover:text-gray-200 active:scale-95'
-              }`}
+          <div className="flex items-center justify-between px-3 py-2 relative">
+            {/* Left: User Avatar - Clickable to Profile */}
+            <div
+              onClick={() => navigate('/client/profile')}
+              className="flex flex-col items-center cursor-pointer active:scale-95 transition-transform"
             >
-              <DashboardOutlined style={{ fontSize: 24, marginBottom: 4 }} />
-              <span className="text-[9px] font-semibold tracking-wide">Home</span>
-            </Link>
+              <Avatar
+                src={user?.avatar}
+                icon={<UserOutlined />}
+                size={32}
+                style={{
+                  backgroundColor: '#667eea',
+                  border: '2px solid rgba(102, 126, 234, 0.3)',
+                }}
+              />
+              <span className="text-[8px] font-semibold text-gray-400 mt-1 tracking-wide">{user?.firstName}</span>
+            </div>
 
             <Link
               to="/client/invoices"
-              className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-300 ${
+              className={`flex flex-col items-center justify-center px-3 py-2 rounded-2xl transition-all duration-300 ${
                 location.pathname === '/client/invoices'
                   ? 'text-purple-400 bg-purple-500/20 scale-105'
                   : 'text-gray-400 hover:text-gray-200 active:scale-95'
               }`}
             >
-              <FileTextOutlined style={{ fontSize: 24, marginBottom: 4 }} />
+              <FileTextOutlined style={{ fontSize: 22, marginBottom: 4 }} />
               <span className="text-[9px] font-semibold tracking-wide">Invoices</span>
             </Link>
 
@@ -402,27 +331,26 @@ export default function ClientLayout() {
 
             <Link
               to="/client/budget"
-              className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-300 ${
+              className={`flex flex-col items-center justify-center px-3 py-2 rounded-2xl transition-all duration-300 ${
                 location.pathname === '/client/budget'
                   ? 'text-green-400 bg-green-500/20 scale-105'
                   : 'text-gray-400 hover:text-gray-200 active:scale-95'
               }`}
             >
-              <BarChartOutlined style={{ fontSize: 24, marginBottom: 4 }} />
+              <BarChartOutlined style={{ fontSize: 22, marginBottom: 4 }} />
               <span className="text-[9px] font-semibold tracking-wide">Budget</span>
             </Link>
 
-            <Link
-              to="/client/reports"
-              className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-300 ${
-                location.pathname === '/client/reports'
-                  ? 'text-pink-400 bg-pink-500/20 scale-105'
-                  : 'text-gray-400 hover:text-gray-200 active:scale-95'
-              }`}
+            {/* Right: Logout Button */}
+            <div
+              onClick={handleLogout}
+              className="flex flex-col items-center cursor-pointer active:scale-95 transition-transform"
             >
-              <PieChartOutlined style={{ fontSize: 24, marginBottom: 4 }} />
-              <span className="text-[9px] font-semibold tracking-wide">Reports</span>
-            </Link>
+              <div className="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
+                <LogoutOutlined style={{ fontSize: 20, color: '#ef4444' }} />
+              </div>
+              <span className="text-[8px] font-semibold text-red-400 mt-1 tracking-wide">Logout</span>
+            </div>
           </div>
 
           {/* Bottom safe area for iOS home indicator */}

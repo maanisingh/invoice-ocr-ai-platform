@@ -232,7 +232,13 @@ export default function AdminLayout() {
         </div>
       </Sider>
 
-      <Layout style={{ marginLeft: collapsed ? 80 : 240 }}>
+      <Layout
+        style={{
+          marginLeft: 0,
+          transition: 'margin-left 0.2s',
+        }}
+        className={collapsed ? 'lg:ml-[80px]' : 'lg:ml-[240px]'}
+      >
         <Header
           className="enterprise-header"
           style={{
