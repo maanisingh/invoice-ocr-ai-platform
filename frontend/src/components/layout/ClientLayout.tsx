@@ -208,7 +208,12 @@ export default function ClientLayout() {
       </Sider>
 
       <Layout
-        className="ml-0 lg:ml-[240px]"
+        style={{
+          marginLeft: 0,
+        }}
+        className={`transition-all duration-200 ${
+          collapsed ? 'lg:ml-[80px]' : 'lg:ml-[240px]'
+        }`}
       >
         {/* Desktop Header */}
         <Header
@@ -265,73 +270,79 @@ export default function ClientLayout() {
           </Space>
         </Header>
 
-        {/* Mobile Header */}
-        <Header
-          className="lg:hidden flex items-center justify-between px-4"
-          style={{
-            padding: '0 16px',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            height: 56,
-            position: 'sticky',
-            top: 0,
-            zIndex: 999,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-          }}
-        >
-          {/* No Logo - Just User Info */}
-          <Space>
-            <Avatar
-              src={user?.avatar}
-              icon={<UserOutlined />}
-              style={{
-                backgroundColor: '#fff',
-                color: '#667eea',
-              }}
-            />
-            <span className="text-white font-semibold text-sm">
-              {user?.firstName}
-            </span>
-          </Space>
 
-          {/* Right Side Actions */}
-          <Space size="middle">
-            <Tooltip title={viewMode === 'desktop' ? 'Switch to Mobile View' : 'Switch to Desktop View'}>
-              <Button
-                type="text"
-                icon={viewMode === 'desktop' ? <MobileOutlined /> : <DesktopOutlined />}
-                onClick={() => setViewMode(viewMode === 'desktop' ? 'mobile' : 'desktop')}
+        {/* Mobile Top Bar - User Info & Actions */}
+        <div className="lg:hidden fixed top-0 left-0 right-0 bg-gradient-to-r from-purple-600 to-indigo-600 z-50 shadow-lg">
+          <div className="flex items-center justify-between px-4 py-3">
+            {/* Left: User Avatar & Name - Clickable to Settings */}
+            <div
+              onClick={() => navigate('/client/profile')}
+              className="flex items-center gap-3 cursor-pointer active:scale-95 transition-transform"
+            >
+              <Avatar
+                src={user?.avatar}
+                icon={<UserOutlined />}
+                size={40}
                 style={{
-                  fontSize: '18px',
-                  color: '#fff',
+                  backgroundColor: '#fff',
+                  color: '#667eea',
+                  border: '2px solid rgba(255,255,255,0.3)',
                 }}
               />
-            </Tooltip>
-            <Badge count={5} size="small">
-              <Button
-                type="text"
-                icon={<BellOutlined />}
-                style={{
-                  fontSize: '18px',
-                  color: '#fff',
-                }}
-              />
-            </Badge>
-            <Tooltip title="Logout">
-              <Button
-                type="text"
-                icon={<LogoutOutlined />}
-                onClick={handleLogout}
-                style={{
-                  fontSize: '18px',
-                  color: '#fff',
-                }}
-              />
-            </Tooltip>
-          </Space>
-        </Header>
+              <div className="flex flex-col">
+                <span className="text-white font-semibold text-sm leading-tight">
+                  {user?.firstName} {user?.lastName}
+                </span>
+                <span className="text-white/70 text-xs">Tap to view profile</span>
+              </div>
+            </div>
+
+            {/* Right: Action Buttons */}
+            <Space size="small">
+              <Tooltip title={viewMode === 'desktop' ? 'Mobile View' : 'Desktop View'}>
+                <Button
+                  type="text"
+                  icon={viewMode === 'desktop' ? <MobileOutlined /> : <DesktopOutlined />}
+                  onClick={() => setViewMode(viewMode === 'desktop' ? 'mobile' : 'desktop')}
+                  style={{
+                    fontSize: '20px',
+                    color: '#fff',
+                    width: 40,
+                    height: 40,
+                  }}
+                  className="flex items-center justify-center"
+                />
+              </Tooltip>
+              <Badge count={5} size="small">
+                <Button
+                  type="text"
+                  icon={<BellOutlined />}
+                  style={{
+                    fontSize: '20px',
+                    color: '#fff',
+                    width: 40,
+                    height: 40,
+                  }}
+                  className="flex items-center justify-center"
+                />
+              </Badge>
+              <Tooltip title="Logout">
+                <Button
+                  type="text"
+                  icon={<LogoutOutlined />}
+                  onClick={handleLogout}
+                  style={{
+                    fontSize: '20px',
+                    color: '#fff',
+                    width: 40,
+                    height: 40,
+                  }}
+                  className="flex items-center justify-center"
+                />
+              </Tooltip>
+            </Space>
+          </div>
+        </div>
 
         <Content
           style={{
@@ -342,7 +353,7 @@ export default function ClientLayout() {
             overflowX: 'hidden',
             paddingBottom: '80px',
           }}
-          className="lg:p-6 lg:pb-6 lg:min-h-[calc(100vh-64px)]"
+          className="lg:p-6 lg:pb-6 lg:min-h-[calc(100vh-64px)] pt-16 lg:pt-0"
         >
           <Outlet />
         </Content>
