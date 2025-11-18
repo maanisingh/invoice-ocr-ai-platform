@@ -7,8 +7,8 @@ const PrivacyPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       {/* Header */}
-      <div className="bg-gray-900/80 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <button
             onClick={() => navigate('/')}
             className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
@@ -16,11 +16,14 @@ const PrivacyPage = () => {
             <ArrowLeft className="w-5 h-5" />
             Back to Home
           </button>
+          <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+            Invoice OCR AI
+          </div>
         </div>
-      </div>
+      </nav>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto px-4 py-12 mt-20">
         <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
           Privacy Policy
         </h1>
