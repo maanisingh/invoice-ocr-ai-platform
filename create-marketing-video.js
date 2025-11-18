@@ -28,74 +28,134 @@ async function createMarketingVideo() {
   const page = await context.newPage();
 
   try {
-    console.log('📹 Recording: Loading homepage...');
+    // Load landing page
+    console.log('📹 Recording: Loading landing page...');
     await page.goto(FRONTEND_URL);
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(3000);
 
-    // Try to login if login page exists
-    try {
-      console.log('📹 Recording: Attempting login...');
-      const emailInput = await page.locator('input[type="email"]').first();
-      if (await emailInput.isVisible({ timeout: 2000 })) {
-        await emailInput.fill('demo@alexandratechlab.com');
-        await page.locator('input[type="password"]').first().fill('demo123');
-        await page.locator('button:has-text("Login"), button:has-text("Sign in")').first().click();
-        await page.waitForTimeout(4000);
-      }
-    } catch (e) {
-      console.log('No login required or already logged in');
-    }
-
-    // Dashboard view
-    console.log('📹 Recording: Dashboard...');
-    await page.waitForTimeout(3000);
+    // Scroll through landing page
+    console.log('📹 Recording: Landing page scroll...');
+    await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight / 2, behavior: 'smooth' }));
+    await page.waitForTimeout(2000);
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
     await page.waitForTimeout(2000);
 
-    // Navigate through features
-    const features = [
-      { text: 'Invoices', wait: 3000 },
-      { text: 'Upload', wait: 3000 },
-      { text: 'Analytics', wait: 3000 },
-      { text: 'Dashboard', wait: 3000 }
+    // Navigate to login
+    console.log('📹 Recording: Navigating to login...');
+    try {
+      await page.click('button:has-text("Sign In"), a:has-text("Sign In")');
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(2000);
+    } catch (e) {
+      console.log('Navigating to /login directly');
+      await page.goto(FRONTEND_URL + '/login');
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(2000);
+    }
+
+    // Click Admin button
+    console.log('📹 Recording: Clicking Admin login...');
+    try {
+      const adminButton = page.locator('button:has-text("Admin"), button:has-text("admin")').first();
+      await adminButton.click();
+      await page.waitForTimeout(2000);
+    } catch (e) {
+      console.log('Admin button not found, trying direct credentials...');
+    }
+
+    // Fill admin credentials (if needed)
+    console.log('📹 Recording: Admin dashboard...');
+    await page.waitForTimeout(3000);
+
+    // Navigate through admin features
+    const adminFeatures = [
+      { selector: 'text=Dashboard', wait: 3000 },
+      { selector: 'text=Invoices', wait: 3000 },
+      { selector: 'text=Upload', wait: 2000 },
+      { selector: 'text=Clients', wait: 2000 },
+      { selector: 'text=Reports', wait: 2000 },
     ];
 
-    for (const feature of features) {
+    for (const feature of adminFeatures) {
       try {
-        console.log(`📹 Recording: ${feature.text}...`);
-        await page.click(`text=${feature.text}`);
+        console.log(`📹 Recording: ${feature.selector}...`);
+        await page.click(feature.selector);
         await page.waitForTimeout(feature.wait);
         await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
         await page.waitForTimeout(1000);
       } catch (e) {
-        console.log(`Feature "${feature.text}" not found, continuing...`);
+        console.log(`Feature "${feature.selector}" not found, continuing...`);
       }
     }
 
     // Smooth scroll demonstration
-    console.log('📹 Recording: Scroll demonstration...');
+    console.log('📹 Recording: Admin dashboard scroll...');
     await page.evaluate(async () => {
-      await new Promise((resolve) => {
-        let totalHeight = 0;
-        const distance = 100;
-        const timer = setInterval(() => {
-          const scrollHeight = document.body.scrollHeight;
-          window.scrollBy(0, distance);
-          totalHeight += distance;
-
-          if(totalHeight >= scrollHeight / 2) {
-            clearInterval(timer);
-            resolve();
-          }
-        }, 100);
-      });
+      window.scrollTo({ top: document.body.scrollHeight / 2, behavior: 'smooth' });
     });
-
+    await page.waitForTimeout(2000);
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
     await page.waitForTimeout(2000);
 
-    // Scroll back to top
+    // Logout
+    console.log('📹 Recording: Logging out...');
+    try {
+      await page.click('[aria-label="Logout"], button:has-text("Logout"), button:has-text("Sign out")');
+      await page.waitForTimeout(2000);
+    } catch (e) {
+      console.log('Logout button not found, going to login page directly');
+      await page.goto(FRONTEND_URL + '/login');
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(2000);
+    }
+
+    // Click Client button
+    console.log('📹 Recording: Clicking Client login...');
+    try {
+      const clientButton = page.locator('button:has-text("Client"), button:has-text("client")').first();
+      await clientButton.click();
+      await page.waitForTimeout(2000);
+    } catch (e) {
+      console.log('Client button not found...');
+    }
+
+    // Navigate through client features
+    console.log('📹 Recording: Client dashboard...');
+    await page.waitForTimeout(3000);
+
+    const clientFeatures = [
+      { selector: 'text=Dashboard', wait: 3000 },
+      { selector: 'text=Invoices', wait: 3000 },
+      { selector: 'text=Upload', wait: 2000 },
+      { selector: 'text=Reports', wait: 2000 },
+    ];
+
+    for (const feature of clientFeatures) {
+      try {
+        console.log(`📹 Recording: Client ${feature.selector}...`);
+        await page.click(feature.selector);
+        await page.waitForTimeout(feature.wait);
+        await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        await page.waitForTimeout(1000);
+      } catch (e) {
+        console.log(`Feature "${feature.selector}" not found, continuing...`);
+      }
+    }
+
+    // Final scroll
+    console.log('📹 Recording: Client dashboard scroll...');
+    await page.evaluate(async () => {
+      window.scrollTo({ top: document.body.scrollHeight / 2, behavior: 'smooth' });
+    });
+    await page.waitForTimeout(2000);
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    await page.waitForTimeout(2000);
+
+    // Back to landing page
+    console.log('📹 Recording: Return to landing page...');
+    await page.goto(FRONTEND_URL);
+    await page.waitForLoadState('networkidle');
     await page.waitForTimeout(3000);
 
     console.log('✅ Recording complete!');
@@ -114,6 +174,9 @@ async function createMarketingVideo() {
       if (videoFile) {
         const oldPath = `${OUTPUT_DIR}/${videoFile}`;
         const newPath = `${OUTPUT_DIR}/demo-video.webm`;
+        if (fs.existsSync(newPath)) {
+          fs.unlinkSync(newPath);
+        }
         fs.renameSync(oldPath, newPath);
         resolve(newPath);
       }
@@ -127,10 +190,9 @@ async function createMarketingVideo() {
   console.log('📁 Location:', videoPath);
   console.log('');
   console.log('Next steps:');
-  console.log('1. Video saved to public/videos/demo-video.webm');
+  console.log('1. Video saved to frontend/public/videos/demo-video.webm');
   console.log('2. Landing page will automatically use it');
-  console.log('3. Optional: Convert to MP4 for better compatibility:');
-  console.log('   ffmpeg -i public/videos/demo-video.webm -c:v libx264 -c:a aac public/videos/demo-video.mp4');
+  console.log('3. Commit and push: git add . && git commit -m "Update demo video" && git push');
 }
 
 createMarketingVideo().catch(console.error);

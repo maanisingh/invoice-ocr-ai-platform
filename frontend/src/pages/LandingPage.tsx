@@ -112,6 +112,29 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+      {/* Top Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+            Invoice OCR AI
+          </div>
+          <div className="flex gap-4">
+            <button
+              onClick={() => navigate('/login')}
+              className="px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full font-semibold transition-all duration-300"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => navigate('/register')}
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+            >
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </nav>
+
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
