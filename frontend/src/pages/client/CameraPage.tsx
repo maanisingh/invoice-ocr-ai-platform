@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Form, Input, Button, message } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
 import EnhancedCameraCapture from '@/components/camera/EnhancedCameraCapture';
 import OfflineIndicator from '@/components/camera/OfflineIndicator';
 import { CapturedImage } from '@/types/capture';
@@ -62,12 +61,6 @@ export default function ClientCameraPage() {
       <div className="w-full px-0 sm:px-4 md:px-6 lg:max-w-6xl lg:mx-auto space-y-3 sm:space-y-6 pb-20 lg:pb-8">
         {/* Desktop Header Only */}
         <div className="hidden lg:flex items-center gap-4">
-          <Button
-            icon={<ArrowLeftOutlined />}
-            onClick={() => navigate('/client/invoices')}
-          >
-            Back
-          </Button>
           <div>
             <h1 className="text-3xl font-bold">📸 Upload Invoice</h1>
             <p className="text-gray-500 mt-1">

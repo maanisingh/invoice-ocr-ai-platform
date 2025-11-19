@@ -289,7 +289,8 @@ export default function BudgetTrackingPage() {
       {/* Desktop View */}
       <div className="hidden lg:block space-y-6">
         {/* Header */}
-        <div className="flex justify-end items-center mb-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-4xl font-black text-gray-900">Budget Management</h1>
           <Button type="primary" icon={<PlusOutlined />} size="large">
             Create Budget
           </Button>

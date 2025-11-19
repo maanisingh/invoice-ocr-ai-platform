@@ -17,6 +17,7 @@ export default function ClientProfilePage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
+      <h1 className="text-4xl font-black text-gray-900 mb-6">My Profile</h1>
       <Card title="Profile Information">
         <div className="flex items-center gap-6 mb-6">
           <Avatar size={100} src={user?.avatar} icon={<UserOutlined />} />

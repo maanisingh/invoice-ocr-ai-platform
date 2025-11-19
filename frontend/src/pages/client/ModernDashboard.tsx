@@ -269,8 +269,9 @@ export default function ModernClientDashboard() {
           ref={headerRef}
           initial={{ opacity: 0, y: -20 }}
           animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          className="flex items-center justify-end mb-6"
+          className="flex items-center justify-between mb-6"
         >
+          <h1 className="text-4xl font-black text-gray-900">Dashboard</h1>
           <Button
             type="primary"
             size="large"
