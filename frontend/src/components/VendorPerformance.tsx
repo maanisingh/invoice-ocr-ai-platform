@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Row, Col, Card, Table, Tag, Progress, Button, Tooltip } from 'antd';
+import { Row, Col, Card, Table, Tag, Progress, Button, Tooltip, Alert } from 'antd';
 import {
   StarOutlined,
   TrophyOutlined,
@@ -174,10 +174,6 @@ export default function VendorPerformance() {
     },
   ];
 
-  if (!isDemoMode) {
-    return null;
-  }
-
   return (
     <div>
       {/* Header */}
@@ -194,8 +190,21 @@ export default function VendorPerformance() {
         </p>
       </motion.div>
 
-      {/* Metrics */}
-      <Row gutter={[24, 24]} className="mb-6">
+      {/* Demo Mode Alert */}
+      {!isDemoMode && (
+        <Alert
+          message="Demo Mode Required"
+          description="Vendor performance data is only available in demo mode. Please turn demo mode on from the toggle in the header to view vendor analytics."
+          type="info"
+          showIcon
+          className="mb-6"
+        />
+      )}
+
+      {isDemoMode && (
+        <>
+          {/* Metrics */}
+          <Row gutter={[24, 24]} className="mb-6">
         <Col xs={24} sm={12} lg={6}>
           <AnimatedMetricCard
             title="Avg Overall Rating"
@@ -366,6 +375,8 @@ export default function VendorPerformance() {
           />
         </Card>
       </motion.div>
+        </>
+      )}
     </div>
   );
 }

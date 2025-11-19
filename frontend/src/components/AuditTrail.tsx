@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Card, Table, Tag, Input, Select, DatePicker, Button, Tooltip, Timeline, Badge } from 'antd';
+import { Card, Table, Tag, Input, Select, DatePicker, Button, Tooltip, Timeline, Badge, Alert } from 'antd';
 import {
   SafetyOutlined,
   SearchOutlined,
@@ -195,10 +195,6 @@ export default function AuditTrail() {
     },
   ];
 
-  if (!isDemoMode) {
-    return null;
-  }
-
   return (
     <div>
       {/* Header */}
@@ -221,6 +217,20 @@ export default function AuditTrail() {
           </Button>
         </div>
       </motion.div>
+
+      {/* Demo Mode Alert */}
+      {!isDemoMode && (
+        <Alert
+          message="Demo Mode Required"
+          description="Audit trail data is only available in demo mode. Please turn demo mode on from the toggle in the header to view audit logs and compliance tracking."
+          type="info"
+          showIcon
+          className="mb-6"
+        />
+      )}
+
+      {isDemoMode && (
+        <>
 
       {/* Stats Cards */}
       <motion.div
@@ -386,6 +396,8 @@ export default function AuditTrail() {
           />
         </Card>
       </motion.div>
+        </>
+      )}
     </div>
   );
 }
